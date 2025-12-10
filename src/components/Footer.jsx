@@ -29,7 +29,6 @@ function Footer() {
             <ul className="footer-links">
               <li><a href="https://kathape.tech" target="_blank" rel="noopener noreferrer">KathaPe Customer</a></li>
               <li><a href="https://business.kathape.tech" target="_blank" rel="noopener noreferrer">KathaPe Business</a></li>
-              <li><a href="https://internships.ekthaa.app" target="_blank" rel="noopener noreferrer">Internships Portal</a></li>
             </ul>
           </div>
 

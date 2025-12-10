@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Store, Users, Briefcase } from 'lucide-react';
+import { ExternalLink, Store, Users } from 'lucide-react';
 import './Products.css';
 
 function Products() {
@@ -29,19 +29,6 @@ function Products() {
         'Business analytics'
       ],
       color: 'from-purple-500 to-pink-500'
-    },
-    {
-      name: 'Internships Portal',
-      description: 'Modern internship application and management platform. Apply for positions, track applications, and manage recruitment seamlessly.',
-      url: 'https://internships.ekthaa.app',
-      icon: Briefcase,
-      features: [
-        'Easy application process',
-        'Application tracking',
-        'Admin dashboard',
-        'Automated workflows'
-      ],
-      color: 'from-green-500 to-emerald-500'
     }
   ];
 
