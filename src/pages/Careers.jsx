@@ -142,7 +142,7 @@ function Careers() {
               We're always looking for talented individuals. Send us your resume and we'll keep you in mind for future opportunities.
             </p>
             <a
-              href="mailto:careers@ekthaa.app"
+              href="mailto:hr@ekthaa.app"
               className="btn btn-primary btn-large"
             >
               Contact Us
