@@ -34,6 +34,14 @@ function Footer() {
           </div>
 
           <div className="footer-section">
+            <h4 className="footer-heading">Legal</h4>
+            <ul className="footer-links">
+              <li><a href="/terms">Terms & Conditions</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-section">
             <h4 className="footer-heading">Contact</h4>
             <ul className="footer-links">
               <li><a href="mailto:founder@ekthaa.app">founder@ekthaa.app</a></li>
