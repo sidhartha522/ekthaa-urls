@@ -84,6 +84,16 @@ function Privacy() {
             <li>Navigation patterns</li>
             <li>Crash logs and error reports</li>
           </ul>
+
+          <h3>1.8 Camera Access</h3>
+          <p>Ekthaa Business may request access to your device's camera solely for user-initiated actions such as:</p>
+          <ul>
+            <li>Uploading product images</li>
+            <li>Adding business photos</li>
+            <li>Attaching images to products or services</li>
+          </ul>
+          <p>The camera is never accessed automatically or in the background. Images are captured or uploaded only when you explicitly choose to do so within the app.</p>
+          <p>Captured images are stored securely and used only for displaying business-related content. Ekthaa Business does not access or record video or images without user consent.</p>
         </section>
 
         <section>
