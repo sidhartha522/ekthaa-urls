@@ -202,7 +202,7 @@ const Tracker = () => {
                     ) : (
                         <>
                             {/* Stats Grid - Mobile optimized with distinct gradients */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12">
                                 <StatCard
                                     label="Today"
                                     value={analytics?.registrations_today || 0}
