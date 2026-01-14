@@ -13,6 +13,7 @@ import HomeNew from './pages/HomeNew';
 import ProductsNew from './pages/ProductsNew';
 import AboutNew from './pages/AboutNew';
 import CareersNew from './pages/CareersNew';
+import Tracker from './pages/Tracker';
 
 // Customer app pages
 import Login from './pages/customer/Login';
@@ -83,6 +84,7 @@ function AppContent() {
         <Route path="/products" element={<AppLayout><ProductsNew /></AppLayout>} />
         <Route path="/about" element={<AppLayout><AboutNew /></AppLayout>} />
         <Route path="/careers" element={<AppLayout><CareersNew /></AppLayout>} />
+        <Route path="/tracker" element={<AppLayout showChat={false}><Tracker /></AppLayout>} />
 
         {/* Legal pages */}
         <Route path="/terms" element={<AppLayout showChat={false}><Terms /></AppLayout>} />
