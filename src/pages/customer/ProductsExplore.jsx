@@ -103,7 +103,10 @@ const ProductsExplore = () => {
     };
 
     const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
-    const formatCurrency = (amount) => `₹${(amount || 0).toLocaleString('en-IN')}`;
+    const formatCurrency = (amount) => {
+        if (amount === 0) return 'Contact for price';
+        return `₹${(amount || 0).toLocaleString('en-IN')}`;
+    };
 
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
@@ -216,10 +219,10 @@ const ProductsExplore = () => {
                                                 {product.name}
                                             </h3>
                                             <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
-                                                <p className="text-lg font-bold text-brand-teal mt-1">
+                                                <p className={`mt-1 ${product.price === 0 ? 'text-sm font-medium text-gray-400' : 'text-lg font-bold text-brand-teal'}`}>
                                                     <span itemProp="price">{formatCurrency(product.price)}</span>
                                                     <meta itemProp="priceCurrency" content="INR" />
-                                                    {product.unit && <span className="text-sm font-normal text-gray-500">/{product.unit}</span>}
+                                                    {product.price !== 0 && product.unit && <span className="text-sm font-normal text-gray-500">/{product.unit}</span>}
                                                 </p>
                                                 <link itemProp="availability" href={product.in_stock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"} />
                                             </div>

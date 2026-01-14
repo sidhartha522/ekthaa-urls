@@ -64,7 +64,10 @@ const ProductDetail = () => {
         fetchProductData();
     }, [productId, location.state]);
 
-    const formatCurrency = (amount) => `₹${(amount || 0).toLocaleString('en-IN')}`;
+    const formatCurrency = (amount) => {
+        if (amount === 0) return 'Contact for price';
+        return `₹${(amount || 0).toLocaleString('en-IN')}`;
+    };
 
     if (loading) {
         return <DetailPageSkeleton />;
@@ -193,10 +196,10 @@ const ProductDetail = () => {
                             </h1>
 
                             <div className="flex items-baseline gap-2 mb-6">
-                                <span className="text-3xl font-bold text-brand-teal">
+                                <span className={product.price === 0 ? "text-xl font-medium text-gray-400" : "text-3xl font-bold text-brand-teal"}>
                                     {formatCurrency(product.price)}
                                 </span>
-                                {product.unit && (
+                                {product.price !== 0 && product.unit && (
                                     <span className="text-lg text-gray-500">/{product.unit}</span>
                                 )}
                             </div>
