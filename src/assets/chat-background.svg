@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <pattern id="ekthaaPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+      <!-- Rupee Symbol -->
+      <text x="5" y="15" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#5a9a8e" opacity="0.12">₹</text>
+      
+      <!-- Receipt/Invoice -->
+      <g transform="translate(28, 5)" opacity="0.08" stroke="#5a9a8e" fill="none" stroke-width="1.2">
+        <rect x="0" y="0" width="10" height="14" rx="1"/>
+        <line x1="2" y1="4" x2="8" y2="4"/>
+        <line x1="2" y1="7" x2="8" y2="7"/>
+        <line x1="2" y1="10" x2="6" y2="10"/>
+      </g>
+      
+      <!-- Wallet -->
+      <g transform="translate(5, 28)" opacity="0.08" stroke="#5a9a8e" fill="none" stroke-width="1.2">
+        <rect x="0" y="0" width="14" height="10" rx="2"/>
+        <rect x="10" y="3" width="3" height="4" rx="0.5"/>
+        <line x1="0" y1="3" x2="14" y2="3"/>
+      </g>
+      
+      <!-- Coins -->
+      <g transform="translate(30, 30)" opacity="0.08" stroke="#5a9a8e" fill="none" stroke-width="1.2">
+        <ellipse cx="6" cy="12" rx="6" ry="2.5"/>
+        <ellipse cx="6" cy="9" rx="6" ry="2.5"/>
+        <ellipse cx="6" cy="6" rx="6" ry="2.5"/>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#ekthaaPattern)"/>
+</svg>

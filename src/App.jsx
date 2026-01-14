@@ -1,47 +1,114 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import GridScan from './components/GridScan';
-import Home from './pages/Home';
-import Products from './pages/Products';
-import Careers from './pages/Careers';
-import About from './pages/About';
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+
+// New app-first components
+import Header from './components/Header';
+import FooterNew from './components/FooterNew';
+import BottomNav from './components/BottomNav';
+import ChatWidget from './components/ChatWidget';
+import PrivateRoute from './components/PrivateRoute';
+
+// New TailwindCSS pages
+import HomeNew from './pages/HomeNew';
+import ProductsNew from './pages/ProductsNew';
+import AboutNew from './pages/AboutNew';
+import CareersNew from './pages/CareersNew';
+
+// Customer app pages
+import Login from './pages/customer/Login';
+import Register from './pages/customer/Register';
+import ProductsExplore from './pages/customer/ProductsExplore';
+import BusinessesExplore from './pages/customer/BusinessesExplore';
+import ProductDetail from './pages/customer/ProductDetail';
+import DetailView from './pages/customer/DetailView';
+
+// Keep Terms, Privacy, DeleteAccount for legal pages
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import DeleteAccount from './pages/DeleteAccount';
-import './App.css';
+
+function AppContent() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [currentCity, setCurrentCity] = useState('Hyderabad');
+  const { loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-brand-cream">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-teal"></div>
+      </div>
+    );
+  }
+
+  // Unified app-first layout for all pages
+  const AppLayout = ({ children, showChat = true }) => (
+    <div className="min-h-screen flex font-sans bg-brand-cream text-brand-text">
+      <div className="flex-1 flex flex-col transition-all duration-300 ease-in-out w-full">
+        <Header currentCity={currentCity} setCurrentCity={setCurrentCity} />
+        <main className="flex-grow pb-16 md:pb-0">
+          {children}
+        </main>
+        <FooterNew />
+        <BottomNav />
+      </div>
+
+      {showChat && (
+        <ChatWidget
+          isOpen={isChatOpen}
+          onToggle={setIsChatOpen}
+          className={`fixed right-0 top-0 h-full z-50 transition-transform duration-300 ease-in-out ${isChatOpen ? 'translate-x-0' : 'translate-x-full'
+            } w-full md:w-[35%] lg:w-[25%]`}
+        />
+      )}
+    </div>
+  );
+
+  // Auth layout (no header/footer)
+  const AuthLayout = ({ children }) => (
+    <>{children}</>
+  );
+
+  return (
+    <div className="app">
+      <Routes>
+        {/* Main pages with app-first design */}
+        <Route path="/" element={<AppLayout><HomeNew currentCity={currentCity} /></AppLayout>} />
+
+        {/* Explore pages - Products and Businesses */}
+        <Route path="/explore" element={<AppLayout><ProductsExplore /></AppLayout>} />
+        <Route path="/businesses" element={<AppLayout><BusinessesExplore /></AppLayout>} />
+        <Route path="/product/:productId" element={<AppLayout><ProductDetail /></AppLayout>} />
+        <Route path="/business/:businessId" element={<AppLayout><DetailView /></AppLayout>} />
+
+        {/* Marketing pages */}
+        <Route path="/products" element={<AppLayout><ProductsNew /></AppLayout>} />
+        <Route path="/about" element={<AppLayout><AboutNew /></AppLayout>} />
+        <Route path="/careers" element={<AppLayout><CareersNew /></AppLayout>} />
+
+        {/* Legal pages */}
+        <Route path="/terms" element={<AppLayout showChat={false}><Terms /></AppLayout>} />
+        <Route path="/privacy" element={<AppLayout showChat={false}><Privacy /></AppLayout>} />
+        <Route path="/delete-account" element={<AppLayout showChat={false}><DeleteAccount /></AppLayout>} />
+
+        {/* Auth pages */}
+        <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
+        <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <div className="grid-scan-background">
-          <GridScan
-            sensitivity={0.55}
-            lineThickness={1}
-            linesColor="#392e4e"
-            gridScale={0.1}
-            scanColor="#FF9FFC"
-            scanOpacity={0.4}
-            enablePost
-            bloomIntensity={0.6}
-            chromaticAberration={0.002}
-            noiseIntensity={0.01}
-          />
-        </div>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/delete-account" element={<DeleteAccount />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </AuthProvider>
   );
 }
 

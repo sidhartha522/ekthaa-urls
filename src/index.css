@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +10,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -16,4 +20,11 @@ body {
 #root {
   width: 100%;
   min-height: 100vh;
+}
+
+/* Custom utility classes for smooth transitions */
+@layer utilities {
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
 }
