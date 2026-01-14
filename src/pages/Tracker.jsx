@@ -44,29 +44,29 @@ const StatCard = ({ label, value, trend, gradient }) => {
 
     return (
         <div className={`relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-gradient-to-br ${gradient}`}>
-            <div className="p-8 md:p-10">
+            <div className="p-5 md:p-7">
                 {/* Value - Using serif font like the heading */}
-                <div className="mb-4">
-                    <span className="text-7xl md:text-8xl font-serif font-bold text-white tracking-tight tabular-nums block">
+                <div className="mb-2">
+                    <span className="text-5xl md:text-6xl font-serif font-bold text-white tracking-tight tabular-nums block">
                         {animatedValue.toLocaleString('en-IN')}
                     </span>
                 </div>
 
                 {/* Label */}
-                <p className="text-base md:text-lg font-bold text-white uppercase tracking-wide mb-2">
+                <p className="text-xs md:text-sm font-bold text-white uppercase tracking-wide mb-1">
                     {label}
                 </p>
 
                 {/* Trend */}
                 {trend && (
-                    <p className="text-sm md:text-base text-white/80 font-medium">
+                    <p className="text-xs text-white/75 font-medium">
                         {trend}
                     </p>
                 )}
             </div>
 
             {/* Accent line with glow */}
-            <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/30"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/30"></div>
         </div>
     );
 };
