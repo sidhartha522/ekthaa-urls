@@ -66,8 +66,11 @@ const Header = ({ currentCity, setCurrentCity }) => {
                         ekthaa
                     </Link>
 
-                    {/* Mobile Menu Toggle */}
-                    <div className="md:hidden flex gap-4 text-brand-text">
+                    {/* Mobile Actions */}
+                    <div className="md:hidden flex items-center gap-5 text-brand-text">
+                        <Link to="/explore" className="text-brand-text hover:text-brand-teal transition-colors" aria-label="Products">
+                            <i className="fa-solid fa-box text-xl"></i>
+                        </Link>
                         <i
                             className="fa-solid fa-bars text-xl cursor-pointer hover:text-brand-teal"
                             onClick={() => setIsMobileMenuOpen(true)}
