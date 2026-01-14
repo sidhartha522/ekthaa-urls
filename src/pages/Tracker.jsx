@@ -43,30 +43,30 @@ const StatCard = ({ label, value, trend, gradient }) => {
     const animatedValue = useCountUp(value);
 
     return (
-        <div className={`relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br ${gradient}`}>
-            <div className="p-6 md:p-8">
-                {/* Value */}
-                <div className="mb-2">
-                    <span className="text-5xl md:text-6xl font-bold text-white tracking-tight tabular-nums">
+        <div className={`relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-gradient-to-br ${gradient}`}>
+            <div className="p-8 md:p-10">
+                {/* Value - Using serif font like the heading */}
+                <div className="mb-4">
+                    <span className="text-7xl md:text-8xl font-serif font-bold text-white tracking-tight tabular-nums block">
                         {animatedValue.toLocaleString('en-IN')}
                     </span>
                 </div>
 
                 {/* Label */}
-                <p className="text-sm md:text-base font-semibold text-white/90 uppercase tracking-wide mb-1">
+                <p className="text-base md:text-lg font-bold text-white uppercase tracking-wide mb-2">
                     {label}
                 </p>
 
                 {/* Trend */}
                 {trend && (
-                    <p className="text-xs md:text-sm text-white/70">
+                    <p className="text-sm md:text-base text-white/80 font-medium">
                         {trend}
                     </p>
                 )}
             </div>
 
-            {/* Accent line */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20"></div>
+            {/* Accent line with glow */}
+            <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/30"></div>
         </div>
     );
 };
@@ -201,27 +201,27 @@ const Tracker = () => {
                         </div>
                     ) : (
                         <>
-                            {/* Stats Grid - Mobile optimized */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12">
+                            {/* Stats Grid - Mobile optimized with distinct gradients */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12">
                                 <StatCard
                                     label="Today"
                                     value={analytics?.registrations_today || 0}
                                     trend="New registrations"
-                                    gradient="from-teal-600 to-brand-teal"
+                                    gradient="from-emerald-500 via-teal-500 to-cyan-600"
                                 />
 
                                 <StatCard
                                     label="Total Users"
                                     value={analytics?.registrations_total || 0}
                                     trend="Since launch"
-                                    gradient="from-brand-teal to-teal-700"
+                                    gradient="from-brand-teal via-teal-600 to-emerald-700"
                                 />
 
                                 <StatCard
                                     label="Products"
                                     value={analytics?.products_total || 0}
                                     trend="Total listed"
-                                    gradient="from-teal-700 to-teal-800"
+                                    gradient="from-cyan-600 via-teal-700 to-teal-800"
                                 />
                             </div>
 
