@@ -38,34 +38,35 @@ const useCountUp = (end, duration = 2000) => {
     return count;
 };
 
-// Clean stat card with brand colors
+// Clean stat card with horizontal layout
 const StatCard = ({ label, value, trend, gradient }) => {
     const animatedValue = useCountUp(value);
 
     return (
         <div className={`relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-gradient-to-br ${gradient}`}>
-            <div className="p-5 md:p-7">
-                {/* Value - Using serif font like the heading */}
-                <div className="mb-2">
-                    <span className="text-5xl md:text-6xl font-serif font-bold text-white tracking-tight tabular-nums block">
-                        {animatedValue.toLocaleString('en-IN')}
+            <div className="p-5 md:p-6 flex items-center gap-4 md:gap-6">
+                {/* Value on left - with plus sign */}
+                <div className="flex-shrink-0">
+                    <span className="text-5xl md:text-6xl font-serif font-bold text-white tracking-tight tabular-nums">
+                        {animatedValue.toLocaleString('en-IN')}+
                     </span>
                 </div>
 
-                {/* Label */}
-                <p className="text-xs md:text-sm font-bold text-white uppercase tracking-wide mb-1">
-                    {label}
-                </p>
-
-                {/* Trend */}
-                {trend && (
-                    <p className="text-xs text-white/75 font-medium">
-                        {trend}
+                {/* Labels on right */}
+                <div className="flex-1 min-w-0">
+                    <p className="text-sm md:text-base font-bold text-white uppercase tracking-wide leading-tight mb-1">
+                        {label}
                     </p>
-                )}
+
+                    {trend && (
+                        <p className="text-xs text-white/75 font-medium">
+                            {trend}
+                        </p>
+                    )}
+                </div>
             </div>
 
-            {/* Accent line with glow */}
+            {/* Accent line */}
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/30"></div>
         </div>
     );
@@ -201,7 +202,7 @@ const Tracker = () => {
                         </div>
                     ) : (
                         <>
-                            {/* Stats Grid - Mobile optimized with distinct gradients */}
+                            {/* Stats Grid - Horizontal card layout */}
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12">
                                 <StatCard
                                     label="Today"
