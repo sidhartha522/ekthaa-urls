@@ -105,7 +105,7 @@ const Tracker = () => {
     const [error, setError] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
 
-    const BUSINESS_API_URL = 'https://ekthaabusiness-955272392528.asia-south1.run.app/api';
+    const BUSINESS_API_URL = 'https://ekthaabusiness-955272392528.europe-west1.run.app/api';
 
     const fetchAnalytics = async (isRefresh = false) => {
         try {
