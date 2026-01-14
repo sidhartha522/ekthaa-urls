@@ -138,15 +138,15 @@ const ProductsExplore = () => {
                 <div className="container mx-auto px-4 py-6">
                     {/* Search Bar */}
                     {/* Search Bar */}
-                    <div className="max-w-3xl mx-auto mb-10">
+                    <div className="max-w-xl mx-auto mb-8">
                         <div className="relative group">
                             <div className="absolute inset-0 bg-gradient-to-r from-brand-teal to-blue-500 rounded-xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-                            <div className="relative flex items-center bg-white rounded-xl shadow-lg border border-gray-100 p-2">
-                                <SearchIcon size={24} className="text-brand-teal ml-3" />
+                            <div className="relative flex items-center bg-white rounded-xl shadow-lg border border-gray-100 p-1.5">
+                                <SearchIcon size={20} className="text-brand-teal ml-3" />
                                 <input
                                     type="text"
-                                    placeholder="Search for products (e.g., 'Loose Rice', 'Organic Dal')..."
-                                    className="flex-1 bg-transparent border-none outline-none text-brand-text px-4 py-3 text-lg placeholder-gray-400"
+                                    placeholder="Search products..."
+                                    className="flex-1 bg-transparent border-none outline-none text-brand-text px-3 py-2 text-base placeholder-gray-400"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />

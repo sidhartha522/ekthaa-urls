@@ -124,8 +124,8 @@ const BusinessesExplore = () => {
 
                 <div className="container mx-auto px-4 py-6">
                     {/* Search Bar */}
-                    <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-                        <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-4 py-3">
+                    <div className="bg-white rounded-lg shadow-sm p-4 mb-6 max-w-2xl mx-auto">
+                        <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
                             <SearchIcon size={20} className="text-gray-400" />
                             <input
                                 type="text"

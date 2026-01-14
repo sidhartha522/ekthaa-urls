@@ -27,10 +27,11 @@ const HomeNew = ({ currentCity }) => {
         const fetchData = async () => {
             setLoading(true);
             try {
+                const isMobile = window.innerWidth < 768;
                 // Fetch businesses directly using the public endpoint (same as Explore page)
                 // This ensures we get the correct data structure and avoid "map is not a function" errors
                 const businessResponse = await businessApi.getPublicBusinesses({
-                    limit: 8, // Fetch enough for display
+                    limit: isMobile ? 4 : 8, // Limit 4 for mobile, 8 for desktop
                     city: currentCity
                 });
 
@@ -62,14 +63,14 @@ const HomeNew = ({ currentCity }) => {
         <div className="space-y-10 animate-fade-in pb-8">
             {/* Hero Banner Carousel */}
             <div className="bg-brand-beige p-4 md:pt-6">
-                <div className={`container mx-auto rounded-xl overflow-hidden shadow-lg relative h-48 md:h-72 bg-gradient-to-r ${banners[activeBanner].color} transition-colors duration-500`}>
-                    <div className="absolute inset-0 flex flex-col justify-center items-start px-8 md:px-16 text-white z-10 max-w-2xl">
-                        <h2 className="text-3xl md:text-5xl font-serif font-bold mb-3 leading-tight">{banners[activeBanner].title}</h2>
-                        <p className="text-lg md:text-xl opacity-90 mb-6">{banners[activeBanner].subtitle}</p>
+                <div className={`container mx-auto rounded-xl overflow-hidden shadow-lg relative h-64 md:h-72 bg-gradient-to-r ${banners[activeBanner].color} transition-colors duration-500`}>
+                    <div className="absolute inset-0 flex flex-col justify-center items-start px-6 md:px-16 text-white z-10 max-w-2xl">
+                        <h2 className="text-2xl md:text-5xl font-serif font-bold mb-2 md:mb-3 leading-tight">{banners[activeBanner].title}</h2>
+                        <p className="text-base md:text-xl opacity-90 mb-4 md:mb-6 line-clamp-2 md:line-clamp-none">{banners[activeBanner].subtitle}</p>
 
                         <button
                             onClick={() => handleBannerAction(banners[activeBanner].action)}
-                            className="bg-white text-brand-dark px-8 py-3 rounded font-bold shadow-lg hover:bg-opacity-90 hover:scale-105 transition transform"
+                            className="bg-white text-brand-dark px-6 py-2 md:px-8 md:py-3 text-sm md:text-base rounded font-bold shadow-lg hover:bg-opacity-90 hover:scale-105 transition transform"
                         >
                             {banners[activeBanner].cta}
                         </button>
@@ -86,32 +87,7 @@ const HomeNew = ({ currentCity }) => {
                 </div>
             </div>
 
-            {/* Dynamic Categories Section */}
-            <div className="container mx-auto px-4">
-                <h3 className="text-xl font-serif font-bold text-brand-dark mb-6">Browse by Category</h3>
-                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-                    {loading ? (
-                        Array(5).fill(0).map((_, idx) => (
-                            <div key={idx} className="min-w-[100px] h-24 bg-gray-100 rounded-xl animate-pulse"></div>
-                        ))
-                    ) : categories.length > 0 ? (
-                        categories.map((cat, idx) => (
-                            <div
-                                key={idx}
-                                className="min-w-[100px] flex flex-col items-center justify-center gap-2 cursor-pointer group p-3 rounded-xl hover:bg-brand-beige/30 transition-colors"
-                                onClick={() => navigate(`/explore?category=${encodeURIComponent(cat.name)}`)}
-                            >
-                                <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${cat.gradient} shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                                    <i className={`fas ${cat.icon} text-white text-lg`}></i>
-                                </div>
-                                <span className="text-xs font-medium text-gray-700 text-center line-clamp-1">{cat.name}</span>
-                            </div>
-                        ))
-                    ) : (
-                        <div className="text-gray-400 text-sm py-4">No categories found</div>
-                    )}
-                </div>
-            </div>
+
 
             {/* Local Businesses Grid (Replaced Category Hub) */}
             <div className="container mx-auto px-4">

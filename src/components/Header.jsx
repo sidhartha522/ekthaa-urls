@@ -63,8 +63,8 @@ const Header = ({ currentCity, setCurrentCity }) => {
             <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center gap-4">
                 {/* Logo */}
                 <div className="flex items-center w-full md:w-auto justify-between">
-                    <Link to="/" className="text-3xl font-serif font-bold tracking-tight text-brand-dark hover:text-brand-teal transition-colors">
-                        ekthaa
+                    <Link to="/" className="flex items-center">
+                        <img src="/logo.png" alt="Ekthaa" className="h-10 w-auto" />
                     </Link>
 
                     {/* Mobile Menu Toggle */}

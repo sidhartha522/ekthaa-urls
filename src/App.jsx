@@ -5,7 +5,6 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 // New app-first components
 import Header from './components/Header';
 import FooterNew from './components/FooterNew';
-import BottomNav from './components/BottomNav';
 import ChatWidget from './components/ChatWidget';
 import PrivateRoute from './components/PrivateRoute';
 
@@ -50,7 +49,6 @@ function AppContent() {
           {children}
         </main>
         <FooterNew />
-        <BottomNav />
       </div>
 
       {showChat && (

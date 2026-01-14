@@ -5,6 +5,14 @@ const FooterNew = () => (
     <footer className="bg-white border-t border-brand-beige mt-12">
         <div className="container mx-auto px-4 py-10">
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 text-sm text-brand-text">
+                <div className="col-span-2 lg:col-span-1">
+                    <Link to="/" className="inline-block">
+                        <img src="/logo.png" alt="Ekthaa" className="h-12 w-auto mb-4" />
+                    </Link>
+                    <p className="text-gray-500 mb-6 leading-relaxed">
+                        Connecting you with the best local businesses and services in your community.
+                    </p>
+                </div>
                 <div>
                     <h4 className="font-serif font-bold text-brand-dark mb-4">Quick Links</h4>
                     <ul className="space-y-2">

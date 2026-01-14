@@ -92,23 +92,48 @@ const ProductDetail = () => {
     const productUrl = `https://ekthaa.com/product/${product.id}`;
 
     // JSON-LD structured data for SEO
+    // JSON-LD structured data for SEO (Google Shopping compatible)
     const jsonLdData = {
         "@context": "https://schema.org",
         "@type": "Product",
         "@id": productUrl,
         "name": product.name,
         "description": product.description || `${product.name} available at ${product.business_name}`,
-        "image": productImage,
+        "image": [productImage],
+        "sku": product.id,
+        "mpn": product.id,
+        "brand": {
+            "@type": "Brand",
+            "name": product.business_name || "Ekthaa Local Business"
+        },
         "category": product.category,
         "offers": {
             "@type": "Offer",
+            "url": productUrl,
             "price": product.price,
             "priceCurrency": "INR",
-            "availability": product.stock_quantity > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            "priceValidUntil": new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0], // Valid for 1 year
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": (product.stock_quantity === undefined || product.stock_quantity > 0)
+                ? "https://schema.org/InStock"
+                : "https://schema.org/OutOfStock",
             "seller": {
                 "@type": "LocalBusiness",
                 "name": product.business_name,
+                "image": product.business_profile_photo,
                 "@id": `https://ekthaa.com/business/${product.business_id}`
+            },
+            "shippingDetails": {
+                "@type": "OfferShippingDetails",
+                "shippingRate": {
+                    "@type": "MonetaryAmount",
+                    "value": 0,
+                    "currency": "INR"
+                },
+                "shippingDestination": {
+                    "@type": "DefinedRegion",
+                    "addressCountry": "IN"
+                }
             }
         }
     };
