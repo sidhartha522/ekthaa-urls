@@ -51,20 +51,20 @@ const FooterNew = () => (
                     </div>
                     <p className="text-xs text-brand-text">Download the Ekthaa App for the best experience.</p>
                     <div className="flex gap-2 mt-3">
-                        <div className="bg-black text-white text-xs px-3 py-2 rounded flex items-center gap-2 cursor-pointer hover:bg-gray-800 transition">
+                        <a href="#" className="bg-black text-white text-xs px-3 py-2 rounded flex items-center gap-2 cursor-pointer hover:bg-gray-800 transition">
                             <i className="fa-brands fa-apple text-lg"></i>
                             <div>
                                 <div className="text-[10px] opacity-70">Download on</div>
                                 <div className="font-medium">App Store</div>
                             </div>
-                        </div>
-                        <div className="bg-black text-white text-xs px-3 py-2 rounded flex items-center gap-2 cursor-pointer hover:bg-gray-800 transition">
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=com.ekthaa.business" target="_blank" rel="noopener noreferrer" className="bg-black text-white text-xs px-3 py-2 rounded flex items-center gap-2 cursor-pointer hover:bg-gray-800 transition">
                             <i className="fa-brands fa-google-play text-lg"></i>
                             <div>
                                 <div className="text-[10px] opacity-70">Get it on</div>
                                 <div className="font-medium">Play Store</div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
