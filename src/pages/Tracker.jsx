@@ -155,7 +155,7 @@ const Tracker = () => {
                             <h1 className="text-3xl md:text-5xl font-serif font-bold text-white mb-3 leading-tight">
                                 Business Growth Tracker
                             </h1>
-                            <p className="text-base md:text-lg text-white/90 max-w-2xl">
+                            <p className="text-xs md:text-lg text-white/90 max-w-2xl">
                                 Track Ekthaa Business growth since launch on January 11, 2026
                             </p>
 
