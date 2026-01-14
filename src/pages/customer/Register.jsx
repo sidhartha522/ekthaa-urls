@@ -7,7 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 import FlashMessage from '../../components/FlashMessage';
 import '../../styles/AuthModern.css';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://kathape-react-business.onrender.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Register = () => {
     const navigate = useNavigate();

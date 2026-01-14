@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://kathape-react-customer.onrender.com',
+        target: 'https://ekthaacustomer-955272392528.asia-south1.run.app',
         changeOrigin: true,
         secure: true,
       }

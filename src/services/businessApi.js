@@ -1,13 +1,10 @@
 /**
  * Business API Service - Real-time data from backend
- * Backend deployed at: https://kathape-react-customer.onrender.com
  */
 
 // Use environment variable for production, use Vite proxy for local development
 const isProduction = import.meta.env.PROD;
-const API_BASE_URL = isProduction
-    ? (import.meta.env.VITE_API_BASE_URL || 'https://kathape-react-business.onrender.com/api')
-    : '/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Get auth token from localStorage
 const getAuthToken = () => {
