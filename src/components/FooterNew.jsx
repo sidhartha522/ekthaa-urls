@@ -42,10 +42,12 @@ const FooterNew = () => (
                 <div className="col-span-2 md:col-span-1">
                     <h4 className="font-serif font-bold text-brand-dark mb-4">Connect</h4>
                     <div className="flex gap-4 text-xl mb-4">
-                        <i className="fa-brands fa-facebook text-brand-teal cursor-pointer hover:scale-110 transition"></i>
-                        <i className="fa-brands fa-twitter text-brand-teal cursor-pointer hover:scale-110 transition"></i>
-                        <i className="fa-brands fa-instagram text-brand-teal cursor-pointer hover:scale-110 transition"></i>
-                        <i className="fa-brands fa-linkedin text-brand-teal cursor-pointer hover:scale-110 transition"></i>
+                        <a href="https://www.instagram.com/ekthaa.ai?utm_source=qr&igsh=MW1iNGU2ZG1lYWR6dg==" target="_blank" rel="noopener noreferrer" className="text-brand-teal hover:scale-110 transition">
+                            <i className="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/ekthaa/" target="_blank" rel="noopener noreferrer" className="text-brand-teal hover:scale-110 transition">
+                            <i className="fa-brands fa-linkedin"></i>
+                        </a>
                     </div>
                     <p className="text-xs text-brand-text">Download the Ekthaa App for the best experience.</p>
                     <div className="flex gap-2 mt-3">
