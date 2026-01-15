@@ -11,31 +11,39 @@ const BENEFITS = [
 const POSITIONS = [
     {
         id: 1,
-        title: 'Frontend Intern (React)',
+        title: 'AI Chatbot Developer',
         type: 'Internship',
         location: 'Remote',
-        description: 'Work on modern React applications and learn from experienced developers.'
+        description: 'Build an intelligent conversational AI assistant for product discovery using RAG, Python, and LLM APIs.',
+        duration: '2 months',
+        commitment: '15-20 hrs/week'
     },
     {
         id: 2,
-        title: 'Backend Intern (Python + Flask)',
+        title: 'Frontend Intern (React)',
         type: 'Internship',
         location: 'Remote',
-        description: 'Build scalable backend services and APIs using Python and Flask.'
+        description: 'Work on modern React applications and learn from experienced developers.',
+        duration: '2 months',
+        commitment: '15-20 hrs/week'
     },
     {
         id: 3,
-        title: 'Full Stack Intern',
+        title: 'Backend Intern (Python + Flask)',
         type: 'Internship',
         location: 'Remote',
-        description: 'Get hands-on experience with both frontend and backend development.'
+        description: 'Build scalable backend services and APIs using Python and Flask.',
+        duration: '2 months',
+        commitment: '15-20 hrs/week'
     },
     {
         id: 4,
-        title: 'UI/UX Design Intern',
+        title: 'Full Stack Intern',
         type: 'Internship',
         location: 'Remote',
-        description: 'Create beautiful and intuitive user interfaces for our products.'
+        description: 'Get hands-on experience with both frontend and backend development.',
+        duration: '2 months',
+        commitment: '15-20 hrs/week'
     }
 ];
 
@@ -49,7 +57,7 @@ const CareersNew = () => {
     return (
         <div className="min-h-screen bg-brand-cream">
             {/* Hero */}
-            <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-20 px-4">
+            <div className="bg-gradient-to-r from-brand-teal to-teal-600 text-white py-20 px-4">
                 <div className="container mx-auto text-center">
                     <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Join Our Team</h1>
                     <p className="text-xl opacity-90 max-w-2xl mx-auto">
@@ -64,8 +72,8 @@ const CareersNew = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {BENEFITS.map((benefit, idx) => (
                         <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-brand-beige text-center group hover:shadow-md transition">
-                            <div className="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-600 transition">
-                                <i className={`fas ${benefit.icon} text-purple-600 text-xl group-hover:text-white transition`}></i>
+                            <div className="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-brand-teal transition">
+                                <i className={`fas ${benefit.icon} text-brand-teal text-xl group-hover:text-white transition`}></i>
                             </div>
                             <h4 className="font-bold text-brand-dark mb-2">{benefit.title}</h4>
                             <p className="text-gray-600 text-sm">{benefit.description}</p>
@@ -88,19 +96,33 @@ const CareersNew = () => {
                                     <div>
                                         <div className="flex items-center gap-3 mb-2">
                                             <h3 className="font-bold text-brand-dark text-lg">{position.title}</h3>
-                                            <span className="px-3 py-1 bg-purple-100 text-purple-600 text-xs font-medium rounded-full">
+                                            <span className="px-3 py-1 bg-teal-100 text-brand-teal text-xs font-medium rounded-full">
                                                 {position.type}
                                             </span>
                                         </div>
-                                        <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                                            <i className="fas fa-map-marker-alt"></i>
-                                            <span>{position.location}</span>
+                                        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-2">
+                                            <div className="flex items-center gap-1">
+                                                <i className="fas fa-map-marker-alt"></i>
+                                                <span>{position.location}</span>
+                                            </div>
+                                            {position.duration && (
+                                                <div className="flex items-center gap-1">
+                                                    <i className="fas fa-clock"></i>
+                                                    <span>{position.duration}</span>
+                                                </div>
+                                            )}
+                                            {position.commitment && (
+                                                <div className="flex items-center gap-1">
+                                                    <i className="fas fa-calendar-alt"></i>
+                                                    <span>{position.commitment}</span>
+                                                </div>
+                                            )}
                                         </div>
                                         <p className="text-gray-600 text-sm">{position.description}</p>
                                     </div>
                                     <button
                                         onClick={handleApply}
-                                        className="px-6 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition whitespace-nowrap"
+                                        className="px-6 py-2 bg-brand-teal text-white rounded-lg font-medium hover:bg-teal-600 transition whitespace-nowrap"
                                     >
                                         Apply Now
                                     </button>
