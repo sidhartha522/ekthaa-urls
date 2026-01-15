@@ -44,6 +44,15 @@ const POSITIONS = [
         description: 'Get hands-on experience with both frontend and backend development.',
         duration: '2 months',
         commitment: '15-20 hrs/week'
+    },
+    {
+        id: 5,
+        title: 'Startup Builder Intern',
+        type: 'Internship',
+        location: 'Remote',
+        description: 'Help build ekthaa from the ground up. Perfect for entrepreneurial minds who want to experience startup life.',
+        duration: 'Flexible',
+        commitment: '10-15 hrs/week'
     }
 ];
 
