@@ -47,12 +47,12 @@ const POSITIONS = [
     },
     {
         id: 5,
-        title: 'Startup Builder Intern',
-        type: 'Internship',
-        location: 'Remote',
-        description: 'Help build ekthaa from the ground up. Perfect for entrepreneurial minds who want to experience startup life.',
-        duration: 'Flexible',
-        commitment: '10-15 hrs/week'
+        title: '🚀 Startup Builder Internship (You + Your Best Friend)',
+        type: 'Pair Role',
+        location: 'Bangalore, Pune, Chennai, Hyderabad (Preferred)',
+        description: 'You apply with your best friend. We are hiring a PAIR. Perfect for students obsessed with startups and founders.',
+        duration: '1 month',
+        commitment: '30-60 mins/day'
     }
 ];
 
