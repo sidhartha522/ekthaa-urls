@@ -49,7 +49,7 @@ const BusinessesExplore = () => {
                 }
             } catch (e) { }
 
-            const data = await businessApi.getPublicBusinesses({
+            const data = await businessApi.getRealBusinesses({
                 search: searchQuery,
                 category: selectedCategory !== 'All' ? selectedCategory : undefined,
                 city: selectedCity || undefined,
@@ -112,12 +112,12 @@ const BusinessesExplore = () => {
             </Helmet>
 
             <div className="min-h-screen bg-brand-cream pb-20">
-                {/* Header */}
-                <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-8 px-4">
+                {/* Header - Teal Gradient */}
+                <div className="bg-gradient-to-r from-brand-teal to-teal-600 text-white py-8 px-4">
                     <div className="container mx-auto">
                         <h1 className="text-3xl font-serif font-bold mb-2">Explore Businesses</h1>
                         <p className="text-lg opacity-90">
-                            {totalCount} businesses {selectedCity ? `in ${selectedCity}` : 'near you'}
+                            {totalCount} businesses {selectedCity ? `in ${selectedCity}` : 'on Ekthaa'}
                         </p>
                     </div>
                 </div>
@@ -149,7 +149,7 @@ const BusinessesExplore = () => {
                             <select
                                 value={selectedCity}
                                 onChange={(e) => { setSelectedCity(e.target.value); setCurrentPage(1); }}
-                                className="px-4 py-2 rounded-lg bg-white border border-gray-200 text-brand-text focus:border-purple-600 outline-none"
+                                className="px-4 py-2 rounded-lg bg-white border border-gray-200 text-brand-text focus:border-brand-teal outline-none"
                             >
                                 <option value="">All Cities</option>
                                 {cities.map(city => (
@@ -165,8 +165,8 @@ const BusinessesExplore = () => {
                                     key={category}
                                     onClick={() => handleCategoryChange(category)}
                                     className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition ${selectedCategory === category
-                                        ? 'bg-purple-600 text-white'
-                                        : 'bg-white text-brand-text border border-gray-200 hover:border-purple-600'
+                                        ? 'bg-brand-teal text-white'
+                                        : 'bg-white text-brand-text border border-gray-200 hover:border-brand-teal'
                                         }`}
                                 >
                                     {category}
@@ -178,7 +178,7 @@ const BusinessesExplore = () => {
                     {/* Businesses Grid */}
                     {businesses.length === 0 ? (
                         <div className="text-center py-12 bg-white rounded-lg">
-                            <EmptyStoreIllustration size={100} className="mx-auto mb-4" />
+                            <EmptyStoreIllustration size={100} className="mx-auto mb-4 text-brand-teal opacity-50" />
                             <h3 className="font-bold text-brand-dark mb-2">No Businesses Found</h3>
                             <p className="text-gray-500">
                                 {searchQuery ? 'Try a different search term' : 'Businesses will appear here once they register'}
@@ -190,7 +190,7 @@ const BusinessesExplore = () => {
                                 {businesses.map(business => (
                                     <article
                                         key={business.id}
-                                        className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition cursor-pointer group"
+                                        className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition cursor-pointer group border border-transparent hover:border-brand-teal/20"
                                         onClick={() => navigate(`/business/${business.id}`)}
                                         itemScope
                                         itemType="https://schema.org/LocalBusiness"
@@ -203,16 +203,16 @@ const BusinessesExplore = () => {
                                                     className="w-16 h-16 rounded-lg object-cover bg-gray-100 border border-gray-100 flex-shrink-0"
                                                 />
                                             ) : (
-                                                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+                                                <div className="w-16 h-16 bg-gradient-to-br from-brand-teal to-teal-600 rounded-lg flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
                                                     {business.name?.charAt(0).toUpperCase() || 'B'}
                                                 </div>
                                             )}
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="font-bold text-brand-dark group-hover:text-purple-600 transition truncate" itemProp="name">
+                                                <h3 className="font-bold text-brand-dark group-hover:text-brand-teal transition truncate" itemProp="name">
                                                     {business.name}
                                                 </h3>
                                                 {business.category && (
-                                                    <span className="inline-block px-2 py-0.5 bg-purple-100 text-purple-600 text-xs rounded-full mt-1">
+                                                    <span className="inline-block px-2 py-0.5 bg-brand-teal/10 text-brand-teal text-xs rounded-full mt-1">
                                                         {business.category}
                                                     </span>
                                                 )}
@@ -221,7 +221,7 @@ const BusinessesExplore = () => {
                                                 )}
                                                 <div className="flex items-center gap-3 mt-3 text-xs text-gray-400">
                                                     {business.distance !== undefined && business.distance !== null && (
-                                                        <span className="flex items-center gap-1 text-brand-teal font-medium bg-teal-50 px-2 py-0.5 rounded-full">
+                                                        <span className="flex items-center gap-1 text-brand-teal font-medium bg-brand-teal/10 px-2 py-0.5 rounded-full">
                                                             <LocationIcon size={12} />
                                                             {business.distance < 1
                                                                 ? `${Math.round(business.distance * 1000)}m`
@@ -246,7 +246,7 @@ const BusinessesExplore = () => {
                                                     <meta itemProp="telephone" content={business.phone_number} />
                                                 )}
                                             </div>
-                                            <ChevronRightIcon size={20} className="text-gray-300 group-hover:text-purple-600 transition flex-shrink-0" />
+                                            <ChevronRightIcon size={20} className="text-gray-300 group-hover:text-brand-teal transition flex-shrink-0" />
                                         </div>
                                     </article>
                                 ))}
@@ -258,7 +258,7 @@ const BusinessesExplore = () => {
                                     <button
                                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                         disabled={currentPage === 1}
-                                        className="px-4 py-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 hover:border-purple-600 transition flex items-center"
+                                        className="px-4 py-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 hover:border-brand-teal transition flex items-center"
                                     >
                                         <ChevronLeftIcon size={18} />
                                     </button>
@@ -270,7 +270,7 @@ const BusinessesExplore = () => {
                                     <button
                                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                         disabled={currentPage === totalPages}
-                                        className="px-4 py-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 hover:border-purple-600 transition flex items-center"
+                                        className="px-4 py-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 hover:border-brand-teal transition flex items-center"
                                     >
                                         <ChevronRightIcon size={18} />
                                     </button>
@@ -283,7 +283,7 @@ const BusinessesExplore = () => {
                     <div className="mt-8 text-center">
                         <button
                             onClick={() => navigate('/explore')}
-                            className="text-purple-600 font-medium hover:underline flex items-center gap-2 justify-center mx-auto"
+                            className="text-brand-teal font-medium hover:underline flex items-center gap-2 justify-center mx-auto"
                         >
                             <BoxIcon size={18} />
                             View Products Catalogue Instead

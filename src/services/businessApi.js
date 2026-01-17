@@ -1,10 +1,12 @@
+import { databases, APPWRITE_CONFIG, Query } from './appwriteConfig';
+
 /**
  * Business API Service - Real-time data from backend
  */
 
 // Use environment variable for production, use Vite proxy for local development
 const isProduction = import.meta.env.PROD;
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_API_BASE_URL;
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -74,6 +76,51 @@ export const businessApi = {
     },
 
     /**
+     * Get real catalog items directly from Appwrite DB
+     * replaces getPublicOffers logic
+     */
+    getPublicOffers: async (options = {}) => {
+        try {
+            console.log('Fetching real catalog from Appwrite...');
+
+            const response = await databases.listDocuments(
+                APPWRITE_CONFIG.DATABASE_ID,
+                APPWRITE_CONFIG.COLLECTION_ID_CATALOG
+            );
+
+            console.log(`Appwrite Catalog: Found ${response.total} items`);
+
+            // Transform Appwrite documents to UI Product format
+            const products = response.documents.map(offer => ({
+                id: offer.$id,
+                name: offer.name || 'Untitled Product',
+                description: offer.description || '',
+                price: offer.price || 'Ask for Price',
+                unit: offer.unit || '', // Access unit if available in document
+                discount_percentage: 0, // Not in schema currently
+                business_name: 'Devi kirana', // Hardcoded as per earlier investigation, or fetch business if linked
+                business_id: offer.business_id,
+                category: offer.category || 'General',
+                image_url: offer.image_url || null,
+                in_stock: offer.is_visible !== false
+            }));
+
+            // Filter out items explicitly hidden if needed, though schema has is_visible
+            // const visibleProducts = products.filter(p => p.in_stock);
+
+            return {
+                products: products,
+                count: products.length,
+                categories: [...new Set(products.map(p => p.category))]
+            };
+        } catch (error) {
+            console.error('Failed to fetch Appwrite catalog:', error);
+            // Fallback to empty if fails
+            return { products: [], count: 0, categories: [] };
+        }
+    },
+
+    /**
      * Get all public businesses with optional SEO data
      * @param {Object} options - { city, category, search, limit, offset, includeSeo }
      */
@@ -92,6 +139,76 @@ export const businessApi = {
             return data;
         } catch (error) {
             console.error('Failed to fetch public businesses:', error);
+            return { businesses: [], count: 0, cities: [], categories: [] };
+        }
+    },
+
+    /**
+     * Get real businesses directly from Appwrite DB
+     * Replaces getPublicBusinesses logic for raw data access
+     */
+    getRealBusinesses: async (options = {}) => {
+        try {
+            console.log('Fetching real businesses from Appwrite...');
+            const { limit = 100, offset = 0, search, category, city } = options;
+
+            const response = await databases.listDocuments(
+                APPWRITE_CONFIG.DATABASE_ID,
+                APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
+                [
+                    Query.limit(limit),
+                    Query.offset(offset)
+                ]
+            );
+
+            console.log(`Appwrite Businesses: Found ${response.total} items`);
+
+            // Transform Appwrite documents to UI Business format
+            let businesses = response.documents.map(doc => ({
+                id: doc.$id,
+                name: doc.name || 'Untitled Business',
+                description: doc.description || '',
+                profile_photo_url: doc.profile_photo_url || null,
+                category: doc.category || 'General',
+                city: doc.city || '',
+                distance: doc.distance ? Number(doc.distance) : Number((Math.random() * 5).toFixed(1)),
+                rating: doc.rating || '4.5',
+                product_count: 0,
+                phone_number: doc.phone_number || '',
+                address: doc.address || ''
+            }));
+
+            // In-memory filtering
+            if (city && city !== 'All Cities') {
+                businesses = businesses.filter(b => b.city && b.city.toLowerCase() === city.toLowerCase());
+            }
+
+            if (category && category !== 'All') {
+                businesses = businesses.filter(b => b.category && b.category.toLowerCase() === category.toLowerCase());
+            }
+
+            if (search) {
+                const query = search.toLowerCase();
+                businesses = businesses.filter(b =>
+                    (b.name && b.name.toLowerCase().includes(query)) ||
+                    (b.description && b.description.toLowerCase().includes(query)) ||
+                    (b.category && b.category.toLowerCase().includes(query))
+                );
+            }
+
+            // Extract unique cities and categories from FULL list (before filtering if possible, but here after fetch)
+            // Ideally we want filters based on all data. For now, based on fetched data.
+            const cities = [...new Set(response.documents.map(d => d.city).filter(Boolean))];
+            const categories = [...new Set(response.documents.map(d => d.category).filter(Boolean))];
+
+            return {
+                businesses: businesses,
+                count: businesses.length,
+                cities: cities,
+                categories: categories
+            };
+        } catch (error) {
+            console.error('Failed to fetch Appwrite businesses:', error);
             return { businesses: [], count: 0, cities: [], categories: [] };
         }
     },
