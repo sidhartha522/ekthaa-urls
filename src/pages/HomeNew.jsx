@@ -55,7 +55,7 @@ const HomeNew = ({ currentCity }) => {
     }, [currentCity]);
 
     const handleBannerAction = (action) => {
-        if (action === 'explore') navigate('/explore');
+        if (action === 'explore') navigate('/businesses');
         else window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -97,7 +97,7 @@ const HomeNew = ({ currentCity }) => {
                     </h3>
                     <span
                         className="text-sm font-medium text-brand-teal cursor-pointer hover:underline"
-                        onClick={() => navigate('/explore')}
+                        onClick={() => navigate('/businesses')}
                     >
                         View All Nearby
                     </span>
@@ -264,7 +264,7 @@ const HomeNew = ({ currentCity }) => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <button
-                            onClick={() => navigate('/explore')}
+                            onClick={() => navigate('/businesses')}
                             className="bg-white text-brand-teal px-8 py-3 rounded-lg font-bold hover:bg-opacity-90 transition"
                         >
                             Explore Now

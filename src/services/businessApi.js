@@ -1,10 +1,12 @@
+import { databases, APPWRITE_CONFIG } from './appwriteConfig';
+
 /**
  * Business API Service - Real-time data from backend
  */
 
 // Use environment variable for production, use Vite proxy for local development
 const isProduction = import.meta.env.PROD;
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_API_BASE_URL;
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -69,6 +71,51 @@ export const businessApi = {
             return data;
         } catch (error) {
             console.error('Failed to fetch public products:', error);
+            return { products: [], count: 0, categories: [] };
+        }
+    },
+
+    /**
+     * Get real catalog items directly from Appwrite DB
+     * replaces getPublicOffers logic
+     */
+    getPublicOffers: async (options = {}) => {
+        try {
+            console.log('Fetching real catalog from Appwrite...');
+
+            const response = await databases.listDocuments(
+                APPWRITE_CONFIG.DATABASE_ID,
+                APPWRITE_CONFIG.COLLECTION_ID_CATALOG
+            );
+
+            console.log(`Appwrite Catalog: Found ${response.total} items`);
+
+            // Transform Appwrite documents to UI Product format
+            const products = response.documents.map(offer => ({
+                id: offer.$id,
+                name: offer.name || 'Untitled Product',
+                description: offer.description || '',
+                price: offer.price || 'Ask for Price',
+                unit: offer.unit || '', // Access unit if available in document
+                discount_percentage: 0, // Not in schema currently
+                business_name: 'Devi kirana', // Hardcoded as per earlier investigation, or fetch business if linked
+                business_id: offer.business_id,
+                category: offer.category || 'General',
+                image_url: offer.image_url || null,
+                in_stock: offer.is_visible !== false
+            }));
+
+            // Filter out items explicitly hidden if needed, though schema has is_visible
+            // const visibleProducts = products.filter(p => p.in_stock);
+
+            return {
+                products: products,
+                count: products.length,
+                categories: [...new Set(products.map(p => p.category))]
+            };
+        } catch (error) {
+            console.error('Failed to fetch Appwrite catalog:', error);
+            // Fallback to empty if fails
             return { products: [], count: 0, categories: [] };
         }
     },

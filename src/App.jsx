@@ -75,13 +75,16 @@ function AppContent() {
         <Route path="/" element={<AppLayout><HomeNew currentCity={currentCity} /></AppLayout>} />
 
         {/* Explore pages - Products and Businesses */}
-        <Route path="/explore" element={<AppLayout><ProductsExplore /></AppLayout>} />
-        <Route path="/businesses" element={<AppLayout><BusinessesExplore /></AppLayout>} />
-        <Route path="/product/:productId" element={<AppLayout><ProductDetail /></AppLayout>} />
-        <Route path="/business/:businessId" element={<AppLayout><DetailView /></AppLayout>} />
+        {/* Product Catalog ("Products Page") */}
+        <Route path="/products" element={<AppLayout><ProductsExplore /></AppLayout>} />
 
-        {/* Marketing pages */}
-        <Route path="/products" element={<AppLayout><ProductsNew /></AppLayout>} />
+        {/* Alias /explore to /products for backward compatibility if needed, or keeping it as is 
+            But typically users expect "Products" -> /products
+        */}
+        <Route path="/explore" element={<Navigate to="/products" replace />} />
+
+        {/* Marketing/Static Product Landing (Renamed/Moved) */}
+        <Route path="/products-landing" element={<AppLayout><ProductsNew /></AppLayout>} />
         <Route path="/about" element={<AppLayout><AboutNew /></AppLayout>} />
         <Route path="/careers" element={<AppLayout><CareersNew /></AppLayout>} />
         <Route path="/tracker" element={<AppLayout showChat={false}><Tracker /></AppLayout>} />

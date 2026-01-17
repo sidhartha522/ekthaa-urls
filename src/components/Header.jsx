@@ -52,7 +52,7 @@ const Header = ({ currentCity, setCurrentCity }) => {
     };
 
     const navLinks = [
-        { path: '/explore', label: 'Products', icon: 'fa-box' },
+        { path: '/products', label: 'Products', icon: 'fa-box' },
         { path: '/businesses', label: 'Businesses', icon: 'fa-store' },
         { path: '/tracker', label: 'Tracker', icon: 'fa-chart-line' },
         { path: '/about', label: 'About', icon: 'fa-info-circle' },
@@ -69,7 +69,7 @@ const Header = ({ currentCity, setCurrentCity }) => {
 
                     {/* Mobile Actions */}
                     <div className="md:hidden flex items-center gap-5 text-brand-text">
-                        <Link to="/explore" className="text-brand-text hover:text-brand-teal transition-colors" aria-label="Products">
+                        <Link to="/products" className="text-brand-text hover:text-brand-teal transition-colors" aria-label="Products">
                             <i className="fa-solid fa-box text-xl"></i>
                         </Link>
                         <i

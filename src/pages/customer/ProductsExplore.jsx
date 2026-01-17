@@ -68,7 +68,10 @@ const ProductsExplore = () => {
     const loadProducts = async () => {
         setLoading(true);
         try {
-            const data = await businessApi.getPublicProducts({
+            // SWITCH: Fetching from Offers (serving as Catalog) instead of Products
+            // const data = await businessApi.getPublicProducts({ ... });
+
+            const data = await businessApi.getPublicOffers({
                 search: searchQuery,
                 category: selectedCategory !== 'All' ? selectedCategory : undefined,
                 limit: ITEMS_PER_PAGE,
@@ -78,6 +81,10 @@ const ProductsExplore = () => {
 
             setProducts(data.products || []);
             setTotalCount(data.count || 0);
+
+            // Extract categories from available products if needed
+            // For now, Offers will just have 'Offers' category or we can extract if structure changes
+            // const productCategories = [...new Set(data.products.map(p => p.category))];
 
             // Set categories from API
             if (data.categories && data.categories.length > 0) {
