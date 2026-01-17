@@ -1,4 +1,4 @@
-import { Client, Databases } from 'appwrite';
+import { Client, Databases, Query } from 'appwrite';
 
 const client = new Client();
 
@@ -11,8 +11,10 @@ client
     .setProject(PROJECT_ID);
 
 export const databases = new Databases(client);
+export { Query };
 
 export const APPWRITE_CONFIG = {
     DATABASE_ID: '1234567890khatape',
-    COLLECTION_ID_CATALOG: 'catalog'
+    COLLECTION_ID_CATALOG: 'catalog',
+    COLLECTION_ID_BUSINESSES: 'businesses'
 };

@@ -49,13 +49,15 @@ const BusinessesExplore = () => {
                 }
             } catch (e) { }
 
-            const data = await businessApi.getPublicBusinesses({
+            const data = await businessApi.getRealBusinesses({
                 search: searchQuery,
                 category: selectedCategory !== 'All' ? selectedCategory : undefined,
                 city: selectedCity || undefined,
                 limit: ITEMS_PER_PAGE,
                 offset: (currentPage - 1) * ITEMS_PER_PAGE,
-                includeSeo: true
+                includeSeo: true,
+                lat,
+                lng
             });
 
             setBusinesses(data.businesses || []);
@@ -110,12 +112,12 @@ const BusinessesExplore = () => {
             </Helmet>
 
             <div className="min-h-screen bg-brand-cream pb-20">
-                {/* Header */}
+                {/* Header - Teal Gradient */}
                 <div className="bg-gradient-to-r from-brand-teal to-teal-600 text-white py-8 px-4">
                     <div className="container mx-auto">
                         <h1 className="text-3xl font-serif font-bold mb-2">Explore Businesses</h1>
                         <p className="text-lg opacity-90">
-                            {totalCount} businesses {selectedCity ? `in ${selectedCity}` : 'near you'}
+                            {totalCount} businesses {selectedCity ? `in ${selectedCity}` : 'on Ekthaa'}
                         </p>
                     </div>
                 </div>
@@ -219,7 +221,7 @@ const BusinessesExplore = () => {
                                                 )}
                                                 <div className="flex items-center gap-3 mt-3 text-xs text-gray-400">
                                                     {business.distance !== undefined && business.distance !== null && (
-                                                        <span className="flex items-center gap-1 text-brand-teal font-medium bg-teal-50 px-2 py-0.5 rounded-full">
+                                                        <span className="flex items-center gap-1 text-brand-teal font-medium bg-brand-teal/10 px-2 py-0.5 rounded-full">
                                                             <LocationIcon size={12} />
                                                             {business.distance < 1
                                                                 ? `${Math.round(business.distance * 1000)}m`

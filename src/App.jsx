@@ -77,6 +77,7 @@ function AppContent() {
         {/* Explore pages - Products and Businesses */}
         {/* Product Catalog ("Products Page") */}
         <Route path="/products" element={<AppLayout><ProductsExplore /></AppLayout>} />
+        <Route path="/businesses" element={<AppLayout><BusinessesExplore /></AppLayout>} />
 
         {/* Alias /explore to /products for backward compatibility if needed, or keeping it as is 
             But typically users expect "Products" -> /products

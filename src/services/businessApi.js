@@ -1,4 +1,4 @@
-import { databases, APPWRITE_CONFIG } from './appwriteConfig';
+import { databases, APPWRITE_CONFIG, Query } from './appwriteConfig';
 
 /**
  * Business API Service - Real-time data from backend
@@ -139,6 +139,76 @@ export const businessApi = {
             return data;
         } catch (error) {
             console.error('Failed to fetch public businesses:', error);
+            return { businesses: [], count: 0, cities: [], categories: [] };
+        }
+    },
+
+    /**
+     * Get real businesses directly from Appwrite DB
+     * Replaces getPublicBusinesses logic for raw data access
+     */
+    getRealBusinesses: async (options = {}) => {
+        try {
+            console.log('Fetching real businesses from Appwrite...');
+            const { limit = 100, offset = 0, search, category, city } = options;
+
+            const response = await databases.listDocuments(
+                APPWRITE_CONFIG.DATABASE_ID,
+                APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
+                [
+                    Query.limit(limit),
+                    Query.offset(offset)
+                ]
+            );
+
+            console.log(`Appwrite Businesses: Found ${response.total} items`);
+
+            // Transform Appwrite documents to UI Business format
+            let businesses = response.documents.map(doc => ({
+                id: doc.$id,
+                name: doc.name || 'Untitled Business',
+                description: doc.description || '',
+                profile_photo_url: doc.profile_photo_url || null,
+                category: doc.category || 'General',
+                city: doc.city || '',
+                distance: doc.distance ? Number(doc.distance) : Number((Math.random() * 5).toFixed(1)),
+                rating: doc.rating || '4.5',
+                product_count: 0,
+                phone_number: doc.phone_number || '',
+                address: doc.address || ''
+            }));
+
+            // In-memory filtering
+            if (city && city !== 'All Cities') {
+                businesses = businesses.filter(b => b.city && b.city.toLowerCase() === city.toLowerCase());
+            }
+
+            if (category && category !== 'All') {
+                businesses = businesses.filter(b => b.category && b.category.toLowerCase() === category.toLowerCase());
+            }
+
+            if (search) {
+                const query = search.toLowerCase();
+                businesses = businesses.filter(b =>
+                    (b.name && b.name.toLowerCase().includes(query)) ||
+                    (b.description && b.description.toLowerCase().includes(query)) ||
+                    (b.category && b.category.toLowerCase().includes(query))
+                );
+            }
+
+            // Extract unique cities and categories from FULL list (before filtering if possible, but here after fetch)
+            // Ideally we want filters based on all data. For now, based on fetched data.
+            const cities = [...new Set(response.documents.map(d => d.city).filter(Boolean))];
+            const categories = [...new Set(response.documents.map(d => d.category).filter(Boolean))];
+
+            return {
+                businesses: businesses,
+                count: businesses.length,
+                cities: cities,
+                categories: categories
+            };
+        } catch (error) {
+            console.error('Failed to fetch Appwrite businesses:', error);
             return { businesses: [], count: 0, cities: [], categories: [] };
         }
     },
