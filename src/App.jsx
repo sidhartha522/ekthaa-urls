@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { Helmet } from 'react-helmet-async';
 
 // New app-first components
 import Header from './components/Header';
@@ -114,6 +115,10 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <Helmet>
+          <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+          <link rel="icon" type="image/png" href="/logo.png?v=3" />
+        </Helmet>
         <AppContent />
       </Router>
     </AuthProvider>
