@@ -44,7 +44,7 @@ const DetailView = () => {
                     <p className="text-gray-500 mb-4">The business you're looking for doesn't exist.</p>
                     <button
                         onClick={() => navigate('/businesses')}
-                        className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+                        className="px-6 py-2 bg-brand-teal text-white rounded-lg hover:bg-teal-700 transition"
                     >
                         Back to Businesses
                     </button>
@@ -110,7 +110,7 @@ const DetailView = () => {
                     <div className="container mx-auto px-4 py-4">
                         <button
                             onClick={() => navigate(-1)}
-                            className="flex items-center gap-2 text-brand-text hover:text-purple-600 transition"
+                            className="flex items-center gap-2 text-brand-text hover:text-brand-teal transition"
                         >
                             <ArrowLeftIcon size={20} />
                             Back
@@ -119,7 +119,7 @@ const DetailView = () => {
                 </div>
 
                 {/* Business Header */}
-                <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-8 px-4">
+                <div className="bg-gradient-to-r from-brand-teal to-teal-600 text-white py-8 px-4">
                     <div className="container mx-auto">
                         <div className="flex items-center gap-6">
                             {business.profile_photo_url ? (
@@ -159,7 +159,7 @@ const DetailView = () => {
                                 <div className="space-y-3">
                                     {business.address && (
                                         <div className="flex items-start gap-3">
-                                            <LocationIcon size={18} className="text-purple-600 mt-1 flex-shrink-0" />
+                                            <LocationIcon size={18} className="text-brand-teal mt-1 flex-shrink-0" />
                                             <div>
                                                 <p className="text-sm text-gray-600">{business.address}</p>
                                                 <p className="text-sm text-gray-500">{business.city}, {business.state} {business.pincode}</p>
@@ -169,8 +169,8 @@ const DetailView = () => {
 
                                     {business.phone_number && (
                                         <div className="flex items-center gap-3">
-                                            <PhoneIcon size={18} className="text-purple-600 flex-shrink-0" />
-                                            <a href={`tel:${business.phone_number}`} className="text-brand-text hover:text-purple-600">
+                                            <PhoneIcon size={18} className="text-brand-teal flex-shrink-0" />
+                                            <a href={`tel:${business.phone_number}`} className="text-brand-text hover:text-brand-teal">
                                                 {business.phone_number}
                                             </a>
                                         </div>
@@ -178,8 +178,8 @@ const DetailView = () => {
 
                                     {business.email && (
                                         <div className="flex items-center gap-3">
-                                            <MailIcon size={18} className="text-purple-600 flex-shrink-0" />
-                                            <a href={`mailto:${business.email}`} className="text-brand-text hover:text-purple-600 text-sm break-all">
+                                            <MailIcon size={18} className="text-brand-teal flex-shrink-0" />
+                                            <a href={`mailto:${business.email}`} className="text-brand-text hover:text-brand-teal text-sm break-all">
                                                 {business.email}
                                             </a>
                                         </div>
@@ -187,8 +187,8 @@ const DetailView = () => {
 
                                     {business.website && (
                                         <div className="flex items-center gap-3">
-                                            <GlobeIcon size={18} className="text-purple-600 flex-shrink-0" />
-                                            <a href={business.website} target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline text-sm">
+                                            <GlobeIcon size={18} className="text-brand-teal flex-shrink-0" />
+                                            <a href={business.website} target="_blank" rel="noopener noreferrer" className="text-brand-teal hover:underline text-sm">
                                                 Visit Website
                                             </a>
                                         </div>
@@ -206,7 +206,7 @@ const DetailView = () => {
 
                                 {(!business.products || business.products.length === 0) ? (
                                     <div className="text-center py-8">
-                                        <EmptyStoreIllustration size={80} className="mx-auto mb-2" />
+                                        <EmptyStoreIllustration size={80} className="mx-auto mb-2 text-gray-300" />
                                         <p className="text-gray-500">No products available yet</p>
                                     </div>
                                 ) : (
@@ -224,7 +224,7 @@ const DetailView = () => {
                                                 />
                                                 <div className="p-3">
                                                     <h3 className="font-medium text-brand-dark text-sm line-clamp-2">{product.name}</h3>
-                                                    <p className="text-purple-600 font-bold mt-1">
+                                                    <p className="text-brand-teal font-bold mt-1">
                                                         {formatCurrency(product.price)}
                                                         {product.unit && <span className="text-xs font-normal text-gray-500">/{product.unit}</span>}
                                                     </p>

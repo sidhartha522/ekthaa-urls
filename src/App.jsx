@@ -84,6 +84,10 @@ function AppContent() {
         */}
         <Route path="/explore" element={<Navigate to="/products" replace />} />
 
+        {/* Detail Pages */}
+        <Route path="/business/:businessId" element={<AppLayout><DetailView /></AppLayout>} />
+        <Route path="/product/:productId" element={<AppLayout><ProductDetail /></AppLayout>} />
+
         {/* Marketing/Static Product Landing (Renamed/Moved) */}
         <Route path="/products-landing" element={<AppLayout><ProductsNew /></AppLayout>} />
         <Route path="/about" element={<AppLayout><AboutNew /></AppLayout>} />
