@@ -225,8 +225,8 @@ const DetailView = () => {
                                                 <div className="p-3">
                                                     <h3 className="font-medium text-brand-dark text-sm line-clamp-2">{product.name}</h3>
                                                     <p className="text-brand-teal font-bold mt-1">
-                                                        {formatCurrency(product.price)}
-                                                        {product.unit && <span className="text-xs font-normal text-gray-500">/{product.unit}</span>}
+                                                        {product.price === 0 ? 'Contact for Price' : formatCurrency(product.price)}
+                                                        {product.price !== 0 && product.unit && <span className="text-xs font-normal text-gray-500">/{product.unit}</span>}
                                                     </p>
                                                     <div className={`text-xs mt-1 ${product.stock_quantity > 0 ? 'text-green-600' : 'text-red-500'}`}>
                                                         {product.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'}
