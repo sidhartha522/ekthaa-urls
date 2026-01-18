@@ -63,6 +63,12 @@ const BusinessesExplore = () => {
             setBusinesses(data.businesses || []);
             setTotalCount(data.count || 0);
 
+            console.log('[BusinessesExplore] Loaded:', {
+                count: data.count,
+                shown: data.businesses?.length,
+                totalInDb: data.count // This assumes count from API is total DB count
+            });
+
             // Set categories and cities from API
             if (data.categories && data.categories.length > 0) {
                 setCategories(['All', ...data.categories]);

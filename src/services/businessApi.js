@@ -68,6 +68,15 @@ export const businessApi = {
             if (includeSeo) endpoint += `&include_seo=true`;
 
             const data = await apiRequest(endpoint);
+
+            // Fix image mapping for products
+            if (data.products && Array.isArray(data.products)) {
+                data.products = data.products.map(p => ({
+                    ...p,
+                    product_image_url: p.product_image_url || p.image_url
+                }));
+            }
+
             return data;
         } catch (error) {
             console.error('Failed to fetch public products:', error);
@@ -83,6 +92,7 @@ export const businessApi = {
         try {
             console.log('Fetching real catalog from Appwrite...');
 
+            // Fetch products
             const response = await databases.listDocuments(
                 APPWRITE_CONFIG.DATABASE_ID,
                 APPWRITE_CONFIG.COLLECTION_ID_CATALOG
@@ -90,23 +100,46 @@ export const businessApi = {
 
             console.log(`Appwrite Catalog: Found ${response.total} items`);
 
-            // Transform Appwrite documents to UI Product format
-            const products = response.documents.map(offer => ({
-                id: offer.$id,
-                name: offer.name || 'Untitled Product',
-                description: offer.description || '',
-                price: offer.price || 'Ask for Price',
-                unit: offer.unit || '', // Access unit if available in document
-                discount_percentage: 0, // Not in schema currently
-                business_name: 'Devi kirana', // Hardcoded as per earlier investigation, or fetch business if linked
-                business_id: offer.business_id,
-                category: offer.category || 'General',
-                image_url: offer.image_url || null,
-                in_stock: offer.is_visible !== false
-            }));
+            // Fetch businesses to map names
+            let businesses = [];
+            try {
+                const businessResponse = await databases.listDocuments(
+                    APPWRITE_CONFIG.DATABASE_ID,
+                    APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
+                    [
+                        Query.limit(100),
+                        Query.select(['$id', 'name']) // Optimize fetch
+                    ]
+                );
+                businesses = businessResponse.documents;
+            } catch (bError) {
+                console.error('Failed to fetch businesses for mapping:', bError);
+            }
 
-            // Filter out items explicitly hidden if needed, though schema has is_visible
-            // const visibleProducts = products.filter(p => p.in_stock);
+            // Create a map for quick lookup
+            const businessMap = {};
+            businesses.forEach(b => {
+                businessMap[b.$id] = b.name;
+            });
+
+            // Transform Appwrite documents to UI Product format
+            const products = response.documents.map(offer => {
+                const businessName = businessMap[offer.business_id] || 'Local Seller';
+                return {
+                    id: offer.$id,
+                    name: offer.name || 'Untitled Product',
+                    description: offer.description || '',
+                    price: offer.price || 'Ask for Price',
+                    unit: offer.unit || '',
+                    discount_percentage: 0,
+                    business_name: businessName, // Dynamic business name
+                    business_id: offer.business_id,
+                    category: offer.category || 'General',
+                    product_image_url: offer.image_url || null,
+                    image_url: offer.image_url || null,
+                    in_stock: offer.is_visible !== false
+                };
+            });
 
             return {
                 products: products,
@@ -152,16 +185,21 @@ export const businessApi = {
             console.log('Fetching real businesses from Appwrite...');
             const { limit = 100, offset = 0, search, category, city } = options;
 
+            // FETCH ALL (Limit 1000 to get everything for client-side filtering)
+            // Note: Efficient pagination should happen on server, but for 46 items, client-side is better for UX filtering
+            const fetchLimit = 1000;
+
             const response = await databases.listDocuments(
                 APPWRITE_CONFIG.DATABASE_ID,
                 APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
                 [
-                    Query.limit(limit),
-                    Query.offset(offset)
+                    Query.limit(fetchLimit),
+                    Query.orderDesc('$createdAt') // Show newest first
+                    // No offset here, we fetch all and slice later
                 ]
             );
 
-            console.log(`Appwrite Businesses: Found ${response.total} items`);
+            console.log(`[getRealBusinesses] Appwrite Raw Count: ${response.total}, Fetched: ${response.documents.length}`);
 
             // Transform Appwrite documents to UI Business format
             let businesses = response.documents.map(doc => ({
@@ -201,9 +239,14 @@ export const businessApi = {
             const cities = [...new Set(response.documents.map(d => d.city).filter(Boolean))];
             const categories = [...new Set(response.documents.map(d => d.category).filter(Boolean))];
 
+            // Apply Pagination Slice AFTER Filtering
+            const startIndex = offset;
+            const endIndex = startIndex + limit;
+            const paginatedBusinesses = businesses.slice(startIndex, endIndex);
+
             return {
-                businesses: businesses,
-                count: businesses.length,
+                businesses: paginatedBusinesses,
+                count: businesses.length, // Total filtered count
                 cities: cities,
                 categories: categories
             };
@@ -219,6 +262,10 @@ export const businessApi = {
     getPublicProduct: async (productId) => {
         try {
             const data = await apiRequest(`/product/public/${productId}`);
+            if (data) {
+                // Fix image mapping
+                data.product_image_url = data.product_image_url || data.image_url;
+            }
             return data;
         } catch (error) {
             console.error(`Failed to fetch product ${productId}:`, error);
@@ -231,8 +278,56 @@ export const businessApi = {
      */
     getPublicBusiness: async (businessId) => {
         try {
+            // Fetch business details from API
             const data = await apiRequest(`/business/public/${businessId}`);
-            return data.business || null;
+            let business = data.business || null;
+
+            if (business) {
+                // ALWAYS fetch real products from Appwrite to ensure completeness
+                // The API might return only a subset or be incomplete
+                try {
+                    console.log(`[getPublicBusiness] Fetching products for ${businessId} from Appwrite...`);
+                    const productResponse = await databases.listDocuments(
+                        APPWRITE_CONFIG.DATABASE_ID,
+                        APPWRITE_CONFIG.COLLECTION_ID_CATALOG,
+                        [
+                            Query.equal('business_id', businessId),
+                            Query.limit(100) // Reasonable limit for a single store
+                        ]
+                    );
+
+                    if (productResponse.documents.length > 0) {
+                        console.log(`[getPublicBusiness] Found ${productResponse.documents.length} products in Appwrite`);
+                        business.products = productResponse.documents.map(offer => ({
+                            id: offer.$id,
+                            name: offer.name || 'Untitled Product',
+                            description: offer.description || '',
+                            price: offer.price || 0,
+                            unit: offer.unit || '',
+                            business_id: offer.business_id,
+                            category: offer.category || 'General',
+                            product_image_url: offer.image_url || null, // Map correctly
+                            image_url: offer.image_url || null,
+                            stock_quantity: offer.is_visible !== false ? 1 : 0
+                        }));
+                        business.products_count = business.products.length;
+                    } else if (!business.products) {
+                        business.products = [];
+                    }
+                } catch (dbError) {
+                    console.error('[getPublicBusiness] Failed to fetch products from Appwrite:', dbError);
+                    // Fallback to API products if Appwrite fails, ensuring image mapping
+                    if (business.products && Array.isArray(business.products)) {
+                        business.products = business.products.map(p => ({
+                            ...p,
+                            product_image_url: p.product_image_url || p.image_url
+                        }));
+                    } else {
+                        business.products = [];
+                    }
+                }
+            }
+            return business;
         } catch (error) {
             console.error(`Failed to fetch business ${businessId}:`, error);
             return null;
