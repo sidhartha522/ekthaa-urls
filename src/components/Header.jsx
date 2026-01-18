@@ -52,6 +52,7 @@ const Header = ({ currentCity, setCurrentCity }) => {
     };
 
     const navLinks = [
+        { path: '/', label: 'Home', icon: 'fa-home' },
         { path: '/products', label: 'Products', icon: 'fa-box' },
         { path: '/businesses', label: 'Businesses', icon: 'fa-store' },
         { path: '/tracker', label: 'Tracker', icon: 'fa-chart-line' },
