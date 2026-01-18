@@ -111,8 +111,8 @@ const ProductsExplore = () => {
 
     const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
     const formatCurrency = (amount) => {
-        if (amount === 0) return 'Contact for price';
-        return `₹${(amount || 0).toLocaleString('en-IN')}`;
+        if (!amount || amount === 0) return 'Contact for Price';
+        return `₹${amount.toLocaleString('en-IN')}`;
     };
 
     const handleCategoryChange = (category) => {
@@ -226,8 +226,10 @@ const ProductsExplore = () => {
                                                 {product.name}
                                             </h3>
                                             <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
-                                                <p className={`mt-1 ${product.price === 0 ? 'text-sm font-medium text-gray-400' : 'text-lg font-bold text-brand-teal'}`}>
-                                                    <span itemProp="price">{formatCurrency(product.price)}</span>
+                                                <p className="mt-1 text-lg font-bold text-brand-teal">
+                                                    <span itemProp="price">
+                                                        {product.price === 0 ? 'Contact for Price' : formatCurrency(product.price)}
+                                                    </span>
                                                     <meta itemProp="priceCurrency" content="INR" />
                                                     {product.price !== 0 && product.unit && <span className="text-sm font-normal text-gray-500">/{product.unit}</span>}
                                                 </p>
