@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAM_ID.com.ekthaa.business",
+        "paths": [
+          "/business/*",
+          "/product/*"
+        ]
+      }
+    ]
+  }
+}
