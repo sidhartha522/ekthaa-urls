@@ -53,7 +53,7 @@ const DetailView = () => {
         );
     }
 
-    const businessUrl = `https://ekthaa.com/business/${business.id}`;
+    const businessUrl = `https://ekthaa.app/business/${business.id}`;
     const businessImage = business.profile_photo_url || 'https://images.unsplash.com/photo-1556745753-b2904692b3cd?w=800&q=80';
 
     // JSON-LD structured data for SEO

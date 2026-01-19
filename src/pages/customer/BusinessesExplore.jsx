@@ -114,7 +114,7 @@ const BusinessesExplore = () => {
                 <title>{seoMeta?.title || 'Local Businesses | Ekthaa'}</title>
                 <meta name="description" content={seoMeta?.description || 'Discover local businesses on Ekthaa'} />
                 {seoMeta?.keywords && <meta name="keywords" content={seoMeta.keywords.join(', ')} />}
-                <link rel="canonical" href={`https://ekthaa.com/businesses${selectedCity ? `?city=${selectedCity}` : ''}`} />
+                <link rel="canonical" href={`https://ekthaa.app/businesses${selectedCity ? `?city=${selectedCity}` : ''}`} />
             </Helmet>
 
             <div className="min-h-screen bg-brand-cream pb-20">

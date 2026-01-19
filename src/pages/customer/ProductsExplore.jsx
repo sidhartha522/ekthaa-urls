@@ -131,7 +131,7 @@ const ProductsExplore = () => {
                 <title>{seoMeta?.title || 'Products Catalogue | Ekthaa'}</title>
                 <meta name="description" content={seoMeta?.description || 'Browse products from local businesses on Ekthaa'} />
                 {seoMeta?.keywords && <meta name="keywords" content={seoMeta.keywords.join(', ')} />}
-                <link rel="canonical" href={`https://ekthaa.com/explore${selectedCategory !== 'All' ? `?category=${selectedCategory}` : ''}`} />
+                <link rel="canonical" href={`https://ekthaa.app/explore${selectedCategory !== 'All' ? `?category=${selectedCategory}` : ''}`} />
             </Helmet>
 
             <div className="min-h-screen bg-brand-cream pb-20">

@@ -11,7 +11,7 @@ const SEO = ({
     url = '',
     type = 'website'
 }) => {
-    const siteUrl = 'https://ekthaa.com'; // Update with your actual domain
+    const siteUrl = 'https://ekthaa.app'; // Production domain
     const fullUrl = url ? `${siteUrl}${url}` : siteUrl;
 
     return (

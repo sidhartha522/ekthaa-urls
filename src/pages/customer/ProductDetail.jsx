@@ -92,7 +92,7 @@ const ProductDetail = () => {
     }
 
     const productImage = getProductImage(product);
-    const productUrl = `https://ekthaa.com/product/${product.id}`;
+    const productUrl = `https://ekthaa.app/product/${product.id}`;
 
     // JSON-LD structured data for SEO
     // JSON-LD structured data for SEO (Google Shopping compatible)
@@ -124,7 +124,7 @@ const ProductDetail = () => {
                 "@type": "LocalBusiness",
                 "name": product.business_name,
                 "image": product.business_profile_photo,
-                "@id": `https://ekthaa.com/business/${product.business_id}`
+                "@id": `https://ekthaa.app/business/${product.business_id}`
             },
             "shippingDetails": {
                 "@type": "OfferShippingDetails",

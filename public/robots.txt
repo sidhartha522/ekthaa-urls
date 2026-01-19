@@ -21,4 +21,4 @@ Disallow: /dashboard
 Disallow: /my-businesses
 Disallow: /referral
 
-Sitemap: https://ekthaa.com/sitemap.xml
+Sitemap: https://ekthaa.app/sitemap.xml
