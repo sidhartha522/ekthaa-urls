@@ -258,19 +258,67 @@ export const businessApi = {
 
     /**
      * Get public product details (no auth required)
+     * Falls back to Appwrite if API fails
      */
     getPublicProduct: async (productId) => {
         try {
+            // Try API first
             const data = await apiRequest(`/product/public/${productId}`);
             if (data) {
                 // Fix image mapping
                 data.product_image_url = data.product_image_url || data.image_url;
+                return data;
             }
-            return data;
-        } catch (error) {
-            console.error(`Failed to fetch product ${productId}:`, error);
-            return null;
+        } catch (apiError) {
+            console.warn(`API fetch failed for product ${productId}, trying Appwrite...`, apiError);
         }
+
+        // Fallback to Appwrite
+        try {
+            console.log(`[getPublicProduct] Fetching product ${productId} from Appwrite...`);
+            const productDoc = await databases.getDocument(
+                APPWRITE_CONFIG.DATABASE_ID,
+                APPWRITE_CONFIG.COLLECTION_ID_CATALOG,
+                productId
+            );
+
+            if (productDoc) {
+                // Fetch business info to get business name
+                let businessName = 'Local Seller';
+                let businessProfilePhoto = null;
+                try {
+                    const businessDoc = await databases.getDocument(
+                        APPWRITE_CONFIG.DATABASE_ID,
+                        APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
+                        productDoc.business_id
+                    );
+                    businessName = businessDoc.name || businessName;
+                    businessProfilePhoto = businessDoc.profile_photo_url || null;
+                } catch (bError) {
+                    console.warn('Could not fetch business details:', bError);
+                }
+
+                // Transform to expected format
+                return {
+                    id: productDoc.$id,
+                    name: productDoc.name || 'Untitled Product',
+                    description: productDoc.description || '',
+                    price: productDoc.price || 0,
+                    unit: productDoc.unit || '',
+                    category: productDoc.category || 'General',
+                    product_image_url: productDoc.image_url || null,
+                    image_url: productDoc.image_url || null,
+                    stock_quantity: productDoc.is_visible !== false ? 1 : 0,
+                    business_id: productDoc.business_id,
+                    business_name: businessName,
+                    business_profile_photo: businessProfilePhoto
+                };
+            }
+        } catch (appwriteError) {
+            console.error(`Failed to fetch product ${productId} from Appwrite:`, appwriteError);
+        }
+
+        return null;
     },
 
     /**
