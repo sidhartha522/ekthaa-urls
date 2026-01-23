@@ -28,17 +28,16 @@ const HomeNew = ({ currentCity }) => {
             setLoading(true);
             try {
                 const isMobile = window.innerWidth < 768;
-                // Fetch businesses directly using the public endpoint (same as Explore page)
-                // This ensures we get the correct data structure and avoid "map is not a function" errors
-                const businessResponse = await businessApi.getPublicBusinesses({
+                // Use Appwrite directly (no backend needed) - same as Explore page
+                const businessResponse = await businessApi.getRealBusinesses({
                     limit: isMobile ? 4 : 8, // Limit 4 for mobile, 8 for desktop
                     city: currentCity
                 });
 
-                // Handle different response structures (backend might return { businesses: [], ... })
+                // getRealBusinesses returns { businesses: [], count: N }
                 const businessList = businessResponse.businesses || [];
 
-                // Get categories (assuming it returns array or handle error internally)
+                // Get categories from Appwrite
                 const availableCategories = await getAvailableCategories();
 
                 setBusinesses(businessList);

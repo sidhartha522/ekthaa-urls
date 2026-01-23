@@ -651,9 +651,9 @@ export const businessApi = {
 // Categories based on available BUSINESSES
 export const getAvailableCategories = async () => {
     try {
-        const response = await businessApi.getPublicBusinesses();
-        // Handle both old (array) and new (object with businesses property) response formats
-        const businesses = Array.isArray(response) ? response : (response.businesses || []);
+        // Use Appwrite directly (no backend needed)
+        const response = await businessApi.getRealBusinesses({ limit: 1000 });
+        const businesses = response.businesses || [];
 
         const categories = [...new Set(businesses.map(b => b.category).filter(Boolean))];
 
