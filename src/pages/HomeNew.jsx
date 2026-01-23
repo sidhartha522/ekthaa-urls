@@ -126,9 +126,9 @@ const HomeNew = ({ currentCity }) => {
                 </div>
 
                 {loading ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide">
                         {Array(8).fill(0).map((_, idx) => (
-                            <div key={idx} className="bg-white rounded-lg p-4 border border-brand-beige animate-pulse">
+                            <div key={idx} className="min-w-[280px] bg-white rounded-lg p-4 border border-brand-beige animate-pulse flex-shrink-0">
                                 <div className="h-32 bg-gray-200 rounded-md mb-4"></div>
                                 <div className="h-4 bg-gray-200 rounded mb-2 w-3/4"></div>
                                 <div className="h-3 bg-gray-200 rounded w-1/2"></div>
@@ -136,19 +136,19 @@ const HomeNew = ({ currentCity }) => {
                         ))}
                     </div>
                 ) : businesses.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide">
                         {businesses.map((business) => (
                             <div
                                 key={business.id || business.$id}
-                                className="bg-white rounded-xl border border-brand-beige overflow-hidden hover:shadow-lg transition-all cursor-pointer group flex flex-col"
+                                className="min-w-[280px] bg-white rounded-xl border border-brand-beige overflow-hidden hover:shadow-lg transition-all cursor-pointer group flex flex-col flex-shrink-0"
                                 onClick={() => navigate(`/business/${business.id || business.$id}`)}
                             >
-                                <div className="h-32 bg-gray-100 relative">
+                                <div className="h-40 bg-gray-100 relative">
                                     {business.profile_photo_url ? (
                                         <img src={business.profile_photo_url} alt={business.name} className="w-full h-full object-cover" />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center bg-brand-teal/10 text-brand-teal">
-                                            <i className="fas fa-store text-3xl opacity-50"></i>
+                                            <i className="fas fa-store text-4xl opacity-50"></i>
                                         </div>
                                     )}
                                     <div className="absolute top-2 right-2 bg-white/90 px-2 py-1 rounded text-xs font-bold shadow-sm">
@@ -161,7 +161,7 @@ const HomeNew = ({ currentCity }) => {
 
                                     <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
                                         <span className="text-xs text-gray-400 flex items-center gap-1">
-                                            <i className="fas fa-map-marker-alt"></i> {business.distance || '0.8 km'}
+                                            <i className="fas fa-map-marker-alt"></i> {business.distance || '0.8'} km
                                         </span>
                                         <span className="text-xs font-medium text-brand-teal bg-brand-teal/5 px-2 py-1 rounded">
                                             {business.category || 'Local'}
