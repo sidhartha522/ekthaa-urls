@@ -31,7 +31,8 @@ const DetailView = () => {
     const fetchBusiness = async () => {
         setLoading(true);
         try {
-            const data = await businessApi.getPublicBusiness(businessId);
+            // Fetch business directly from Appwrite (no backend needed)
+            const data = await businessApi.getRealBusiness(businessId);
             setBusiness(data);
         } catch (error) {
             console.error('Failed to fetch business:', error);

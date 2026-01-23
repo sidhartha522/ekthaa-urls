@@ -8,6 +8,35 @@ import { databases, APPWRITE_CONFIG, Query } from './appwriteConfig';
 const isProduction = import.meta.env.PROD;
 const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_API_BASE_URL;
 
+// Request cache to prevent duplicate calls (especially in React StrictMode)
+const requestCache = new Map();
+const CACHE_DURATION = 5000; // 5 seconds
+
+const getCacheKey = (method, params) => {
+    return `${method}-${JSON.stringify(params)}`;
+};
+
+const getCachedOrFetch = async (cacheKey, fetchFn) => {
+    const now = Date.now();
+    const cached = requestCache.get(cacheKey);
+    
+    if (cached && now - cached.timestamp < CACHE_DURATION) {
+        console.log(`[Cache HIT] ${cacheKey.split('-')[0]}`);
+        return cached.data;
+    }
+    
+    const data = await fetchFn();
+    requestCache.set(cacheKey, { data, timestamp: now });
+    
+    // Clean old cache entries
+    if (requestCache.size > 50) {
+        const entries = Array.from(requestCache.entries());
+        entries.slice(0, 20).forEach(([key]) => requestCache.delete(key));
+    }
+    
+    return data;
+};
+
 // Get auth token from localStorage
 const getAuthToken = () => {
     // Try to get token from separate token storage first
@@ -89,8 +118,11 @@ export const businessApi = {
      * replaces getPublicOffers logic
      */
     getPublicOffers: async (options = {}) => {
-        try {
-            console.log('Fetching real catalog from Appwrite...');
+        const cacheKey = getCacheKey('getPublicOffers', options);
+        
+        return getCachedOrFetch(cacheKey, async () => {
+            try {
+                console.log('Fetching real catalog from Appwrite...');
 
             // Fetch products
             const response = await databases.listDocuments(
@@ -146,11 +178,12 @@ export const businessApi = {
                 count: products.length,
                 categories: [...new Set(products.map(p => p.category))]
             };
-        } catch (error) {
-            console.error('Failed to fetch Appwrite catalog:', error);
-            // Fallback to empty if fails
-            return { products: [], count: 0, categories: [] };
-        }
+            } catch (error) {
+                console.error('Failed to fetch Appwrite catalog:', error);
+                // Fallback to empty if fails
+                return { products: [], count: 0, categories: [] };
+            }
+        });
     },
 
     /**
@@ -181,9 +214,12 @@ export const businessApi = {
      * Replaces getPublicBusinesses logic for raw data access
      */
     getRealBusinesses: async (options = {}) => {
-        try {
-            console.log('Fetching real businesses from Appwrite...');
-            const { limit = 100, offset = 0, search, category, city } = options;
+        const cacheKey = getCacheKey('getRealBusinesses', options);
+        
+        return getCachedOrFetch(cacheKey, async () => {
+            try {
+                console.log('Fetching real businesses from Appwrite...');
+                const { limit = 100, offset = 0, search, category, city } = options;
 
             // FETCH ALL (Limit 1000 to get everything for client-side filtering)
             // Note: Efficient pagination should happen on server, but for 46 items, client-side is better for UX filtering
@@ -250,10 +286,11 @@ export const businessApi = {
                 cities: cities,
                 categories: categories
             };
-        } catch (error) {
-            console.error('Failed to fetch Appwrite businesses:', error);
-            return { businesses: [], count: 0, cities: [], categories: [] };
-        }
+            } catch (error) {
+                console.error('Failed to fetch Appwrite businesses:', error);
+                return { businesses: [], count: 0, cities: [], categories: [] };
+            }
+        });
     },
 
     /**
@@ -322,7 +359,74 @@ export const businessApi = {
     },
 
     /**
-     * Get public business details (no auth required)
+     * Get single business from Appwrite directly (no backend needed)
+     */
+    getRealBusiness: async (businessId) => {
+        try {
+            console.log(`[getRealBusiness] Fetching business ${businessId} from Appwrite...`);
+            
+            // Fetch business from Appwrite
+            const business = await databases.getDocument(
+                APPWRITE_CONFIG.DATABASE_ID,
+                APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
+                businessId
+            );
+
+            if (!business) {
+                return null;
+            }
+
+            // Fetch products for this business
+            const productResponse = await databases.listDocuments(
+                APPWRITE_CONFIG.DATABASE_ID,
+                APPWRITE_CONFIG.COLLECTION_ID_CATALOG,
+                [
+                    Query.equal('business_id', businessId),
+                    Query.limit(100)
+                ]
+            );
+
+            // Format business data
+            const formattedBusiness = {
+                id: business.$id,
+                name: business.name || 'Unnamed Business',
+                description: business.description || '',
+                business_category: business.business_category || business.category || 'Other',
+                category: business.business_category || business.category || 'Other',
+                city: business.city || '',
+                phone_number: business.phone_number || '',
+                email: business.email || '',
+                address: business.address || '',
+                profile_photo_url: business.profile_photo_url || null,
+                shop_photos: business.shop_photos || [],
+                latitude: business.latitude || null,
+                longitude: business.longitude || null,
+                products: productResponse.documents.map(p => ({
+                    id: p.$id,
+                    name: p.name || 'Untitled Product',
+                    description: p.description || '',
+                    price: p.price || 0,
+                    unit: p.unit || '',
+                    category: p.category || 'General',
+                    product_image_url: p.image_url || null,
+                    image_url: p.image_url || null,
+                    business_id: p.business_id,
+                    is_visible: p.is_visible !== false
+                })),
+                products_count: productResponse.documents.length
+            };
+
+            console.log(`[getRealBusiness] Fetched business with ${formattedBusiness.products_count} products`);
+            return formattedBusiness;
+
+        } catch (error) {
+            console.error(`[getRealBusiness] Failed to fetch business ${businessId}:`, error);
+            return null;
+        }
+    },
+
+    /**
+     * Get public business details (no auth required) - DEPRECATED, use getRealBusiness
      */
     getPublicBusiness: async (businessId) => {
         try {

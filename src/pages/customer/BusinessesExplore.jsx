@@ -24,17 +24,16 @@ const BusinessesExplore = () => {
 
     useEffect(() => {
         loadBusinesses();
-    }, [selectedCategory, selectedCity, currentPage]);
+    }, [selectedCategory, selectedCity, currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         // Debounce search
         const timer = setTimeout(() => {
-            if (searchQuery !== searchParams.get('search')) {
-                loadBusinesses();
-            }
+            setCurrentPage(1); // Reset to page 1 when searching
+            loadBusinesses();
         }, 500);
         return () => clearTimeout(timer);
-    }, [searchQuery]);
+    }, [searchQuery]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const loadBusinesses = async () => {
         setLoading(true);

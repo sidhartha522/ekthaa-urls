@@ -6,11 +6,16 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
+      // Business backend for analytics and business operations (WORKING)
       '/api': {
-        target: 'https://ekthaacustomer-955272392528.asia-south1.run.app',
+        target: 'https://ekthaabusiness-955272392528.europe-west1.run.app',
         changeOrigin: true,
         secure: true,
       }
     }
+  },
+  // Environment variables for production
+  define: {
+    'import.meta.env.VITE_API_BASE_URL': JSON.stringify('https://ekthaabusiness-955272392528.europe-west1.run.app/api'),
   }
 })
