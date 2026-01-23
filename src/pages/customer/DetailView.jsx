@@ -41,6 +41,42 @@ const DetailView = () => {
         }
     };
 
+    const handleShare = async () => {
+        if (!business) return;
+        
+        const shareData = {
+            title: business.name,
+            text: `Check out ${business.name} on Ekthaa!`,
+            url: `https://ekthaa.com/business/${business.id}`
+        };
+
+        // Try native Web Share API first (works on mobile)
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                // User cancelled or share failed
+                if (err.name !== 'AbortError') {
+                    console.error('Share failed:', err);
+                    copyToClipboard(shareData.url);
+                }
+            }
+        } else {
+            // Fallback: Copy to clipboard
+            copyToClipboard(shareData.url);
+        }
+    };
+
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('✅ Link copied to clipboard!');
+        }).catch(err => {
+            console.error('Copy failed:', err);
+            // Fallback: show the URL
+            prompt('Copy this link:', text);
+        });
+    };
+
     const formatCurrency = (amount) => `₹${(amount || 0).toLocaleString('en-IN')}`;
 
     if (loading) {
