@@ -174,18 +174,6 @@ const DetailView = () => {
                         <span>Share</span>
                     </button>
                 </div>
-                {/* Business Content */}
-                <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
-                    <div className="container mx-auto px-4 py-4">
-                        <button
-                            onClick={() => navigate(-1)}
-                            className="flex items-center gap-2 text-brand-text hover:text-brand-teal transition"
-                        >
-                            <ArrowLeftIcon size={20} />
-                            Back
-                        </button>
-                    </div>
-                </div>
 
                 {/* Business Header */}
                 <div className="bg-gradient-to-r from-brand-teal to-teal-600 text-white py-8 px-4">
