@@ -20,6 +20,7 @@ const BusinessesExplore = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
+    const [seoMeta, setSeoMeta] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
 
     // Get user's location on mount
@@ -43,7 +44,6 @@ const BusinessesExplore = () => {
             );
         }
     }, []);
-    const [userLocation, setUserLocation] = useState(null);
 
     useEffect(() => {
         loadBusinesses();
