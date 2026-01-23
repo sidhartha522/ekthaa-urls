@@ -117,7 +117,28 @@ const DetailView = () => {
             </Helmet>
 
             <div className="min-h-screen bg-brand-cream pb-20">
-                {/* Back Button */}
+                {/* Back Button and Share */}
+                <div className="flex justify-between items-center px-4 pt-4 pb-2">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="flex items-center gap-2 text-brand-dark hover:text-brand-teal transition"
+                    >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                        <span className="font-medium">Back</span>
+                    </button>
+                    <button
+                        onClick={handleShare}
+                        className="flex items-center gap-2 px-4 py-2 bg-brand-teal text-white rounded-lg hover:bg-teal-700 transition"
+                    >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        </svg>
+                        <span>Share</span>
+                    </button>
+                </div>
+                {/* Business Content */}
                 <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
                     <div className="container mx-auto px-4 py-4">
                         <button

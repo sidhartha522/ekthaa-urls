@@ -275,6 +275,13 @@ export const businessApi = {
             const cities = [...new Set(response.documents.map(d => d.city).filter(Boolean))];
             const categories = [...new Set(response.documents.map(d => d.category).filter(Boolean))];
 
+            // PRIORITIZE businesses with profile photos
+            businesses.sort((a, b) => {
+                const aHasImage = a.profile_photo_url ? 1 : 0;
+                const bHasImage = b.profile_photo_url ? 1 : 0;
+                return bHasImage - aHasImage; // Businesses with images first
+            });
+
             // Apply Pagination Slice AFTER Filtering
             const startIndex = offset;
             const endIndex = startIndex + limit;

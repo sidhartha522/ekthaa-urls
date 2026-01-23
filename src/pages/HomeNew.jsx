@@ -30,7 +30,7 @@ const HomeNew = ({ currentCity }) => {
                 const isMobile = window.innerWidth < 768;
                 // Use Appwrite directly (no backend needed) - same as Explore page
                 const businessResponse = await businessApi.getRealBusinesses({
-                    limit: isMobile ? 4 : 8, // Limit 4 for mobile, 8 for desktop
+                    limit: isMobile ? 4 : 12, // Limit 4 for mobile, 12 for desktop (3 rows x 4 cols)
                     city: currentCity
                 });
 
