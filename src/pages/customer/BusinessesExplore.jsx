@@ -20,7 +20,30 @@ const BusinessesExplore = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
-    const [seoMeta, setSeoMeta] = useState(null);
+    const [userLocation, setUserLocation] = useState(null);
+
+    // Get user's location on mount
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const location = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    setUserLocation(location);
+                    // Store in localStorage for consistency
+                    localStorage.setItem('user_location', JSON.stringify(location));
+                    console.log('User location obtained:', location);
+                },
+                (error) => {
+                    console.log('Location access denied:', error.message);
+                },
+                { enableHighAccuracy: true, timeout: 5000, maximumAge: 300000 }
+            );
+        }
+    }, []);
+    const [userLocation, setUserLocation] = useState(null);
 
     useEffect(() => {
         loadBusinesses();
@@ -38,16 +61,6 @@ const BusinessesExplore = () => {
     const loadBusinesses = async () => {
         setLoading(true);
         try {
-            // Get user location from storage for sorting
-            let lat, lng;
-            try {
-                const loc = JSON.parse(localStorage.getItem('user_location'));
-                if (loc && loc.lat && loc.lng) {
-                    lat = loc.lat;
-                    lng = loc.lng;
-                }
-            } catch (e) { }
-
             const data = await businessApi.getRealBusinesses({
                 search: searchQuery,
                 category: selectedCategory !== 'All' ? selectedCategory : undefined,
@@ -55,8 +68,8 @@ const BusinessesExplore = () => {
                 limit: ITEMS_PER_PAGE,
                 offset: (currentPage - 1) * ITEMS_PER_PAGE,
                 includeSeo: true,
-                lat,
-                lng
+                userLat: userLocation?.lat,
+                userLng: userLocation?.lng
             });
 
             setBusinesses(data.businesses || []);

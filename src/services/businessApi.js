@@ -8,6 +8,26 @@ import { databases, APPWRITE_CONFIG, Query } from './appwriteConfig';
 const isProduction = import.meta.env.PROD;
 const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_API_BASE_URL;
 
+/**
+ * Calculate distance between two coordinates using Haversine formula
+ * @param {number} lat1 - Latitude of point 1
+ * @param {number} lon1 - Longitude of point 1
+ * @param {number} lat2 - Latitude of point 2
+ * @param {number} lon2 - Longitude of point 2
+ * @returns {number} Distance in kilometers
+ */
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Earth's radius in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+};
+
 // Request cache to prevent duplicate calls (especially in React StrictMode)
 const requestCache = new Map();
 const CACHE_DURATION = 5000; // 5 seconds
@@ -237,20 +257,35 @@ export const businessApi = {
 
             console.log(`[getRealBusinesses] Appwrite Raw Count: ${response.total}, Fetched: ${response.documents.length}`);
 
+            // Get user location from options if provided
+            const { userLat, userLng } = options;
+
             // Transform Appwrite documents to UI Business format
-            let businesses = response.documents.map(doc => ({
-                id: doc.$id,
-                name: doc.name || 'Untitled Business',
-                description: doc.description || '',
-                profile_photo_url: doc.profile_photo_url || null,
-                category: doc.category || 'General',
-                city: doc.city || '',
-                distance: doc.distance ? Number(doc.distance) : Number((Math.random() * 5).toFixed(1)),
-                rating: doc.rating || '4.5',
-                product_count: 0,
-                phone_number: doc.phone_number || '',
-                address: doc.address || ''
-            }));
+            let businesses = response.documents.map(doc => {
+                let calculatedDistance = null;
+                
+                // Calculate real distance if user location and business coordinates are available
+                if (userLat && userLng && doc.latitude && doc.longitude) {
+                    calculatedDistance = calculateDistance(userLat, userLng, doc.latitude, doc.longitude);
+                }
+                
+                return {
+                    id: doc.$id,
+                    name: doc.name || 'Untitled Business',
+                    description: doc.description || '',
+                    profile_photo_url: doc.profile_photo_url || null,
+                    category: doc.category || 'General',
+                    city: doc.city || '',
+                    latitude: doc.latitude || null,
+                    longitude: doc.longitude || null,
+                    distance: calculatedDistance !== null ? Number(calculatedDistance.toFixed(1)) : Number((Math.random() * 5).toFixed(1)),
+                    rating: doc.rating || '4.5',
+                    product_count: 0,
+                    phone_number: doc.phone_number || '',
+                    address: doc.address || '',
+                    hasRealDistance: calculatedDistance !== null
+                };
+            });
 
             // In-memory filtering
             if (city && city !== 'All Cities') {
@@ -275,11 +310,21 @@ export const businessApi = {
             const cities = [...new Set(response.documents.map(d => d.city).filter(Boolean))];
             const categories = [...new Set(response.documents.map(d => d.category).filter(Boolean))];
 
-            // PRIORITIZE businesses with profile photos
+            // PRIORITIZE by: 1) Real distance (if available), 2) Profile photos
             businesses.sort((a, b) => {
+                // If both have real distances, sort by distance (nearest first)
+                if (a.hasRealDistance && b.hasRealDistance) {
+                    return a.distance - b.distance;
+                }
+                
+                // Prioritize businesses with real distance over those without
+                if (a.hasRealDistance && !b.hasRealDistance) return -1;
+                if (!a.hasRealDistance && b.hasRealDistance) return 1;
+                
+                // If no real distances, prioritize businesses with profile photos
                 const aHasImage = a.profile_photo_url ? 1 : 0;
                 const bHasImage = b.profile_photo_url ? 1 : 0;
-                return bHasImage - aHasImage; // Businesses with images first
+                return bHasImage - aHasImage;
             });
 
             // Apply Pagination Slice AFTER Filtering

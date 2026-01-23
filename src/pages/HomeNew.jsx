@@ -9,6 +9,7 @@ const HomeNew = ({ currentCity }) => {
     const [businesses, setBusinesses] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [userLocation, setUserLocation] = useState(null);
 
     const banners = [
         { title: "Discover Local Businesses", subtitle: "Find nearby shops, services & products easily", color: "from-brand-teal to-teal-700", cta: "Explore Nearby", action: 'explore' },
@@ -23,6 +24,26 @@ const HomeNew = ({ currentCity }) => {
         return () => clearInterval(timer);
     }, [banners.length]);
 
+    // Get user's location on mount
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setUserLocation({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    });
+                    console.log('User location obtained:', position.coords.latitude, position.coords.longitude);
+                },
+                (error) => {
+                    console.log('Location access denied or unavailable:', error.message);
+                    // Continue without location - will use default sorting
+                },
+                { enableHighAccuracy: true, timeout: 5000, maximumAge: 300000 }
+            );
+        }
+    }, []);
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -31,7 +52,9 @@ const HomeNew = ({ currentCity }) => {
                 // Use Appwrite directly (no backend needed) - same as Explore page
                 const businessResponse = await businessApi.getRealBusinesses({
                     limit: isMobile ? 4 : 12, // Limit 4 for mobile, 12 for desktop (3 rows x 4 cols)
-                    city: currentCity
+                    city: currentCity,
+                    userLat: userLocation?.lat,
+                    userLng: userLocation?.lng
                 });
 
                 // getRealBusinesses returns { businesses: [], count: N }
@@ -51,7 +74,7 @@ const HomeNew = ({ currentCity }) => {
             }
         };
         fetchData();
-    }, [currentCity]);
+    }, [currentCity, userLocation]);
 
     const handleBannerAction = (action) => {
         if (action === 'explore') navigate('/businesses');
