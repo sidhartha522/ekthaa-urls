@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { AnalyticsProvider } from './context/AnalyticsContext';
 import { Helmet } from 'react-helmet-async';
+import usePageTracking from './hooks/usePageTracking';
 
 // New app-first components
 import Header from './components/Header';
@@ -15,6 +17,7 @@ import ProductsNew from './pages/ProductsNew';
 import AboutNew from './pages/AboutNew';
 import CareersNew from './pages/CareersNew';
 import Tracker from './pages/Tracker';
+import Analytics from './pages/Analytics';
 
 // Customer app pages
 import Login from './pages/customer/Login';
@@ -33,6 +36,9 @@ function AppContent() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [currentCity, setCurrentCity] = useState('Hyderabad');
   const { loading } = useAuth();
+
+  // Track page views on route changes
+  usePageTracking();
 
   if (loading) {
     return (
@@ -95,6 +101,9 @@ function AppContent() {
         <Route path="/careers" element={<AppLayout><CareersNew /></AppLayout>} />
         <Route path="/tracker" element={<AppLayout showChat={false}><Tracker /></AppLayout>} />
 
+        {/* Analytics Dashboard - Hidden route, no navigation links */}
+        <Route path="/analytics" element={<AppLayout showChat={false}><Analytics /></AppLayout>} />
+
         {/* Legal pages */}
         <Route path="/terms" element={<AppLayout showChat={false}><Terms /></AppLayout>} />
         <Route path="/privacy" element={<AppLayout showChat={false}><Privacy /></AppLayout>} />
@@ -114,13 +123,15 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Helmet>
-          <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-          <link rel="icon" type="image/png" href="/logo.png?v=3" />
-        </Helmet>
-        <AppContent />
-      </Router>
+      <AnalyticsProvider>
+        <Router>
+          <Helmet>
+            <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+            <link rel="icon" type="image/png" href="/logo.png?v=3" />
+          </Helmet>
+          <AppContent />
+        </Router>
+      </AnalyticsProvider>
     </AuthProvider>
   );
 }
