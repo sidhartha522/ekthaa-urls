@@ -43,11 +43,10 @@ const DetailView = () => {
 
     const handleShare = async () => {
         if (!business) return;
-        
         const shareData = {
             title: business.name,
             text: `Check out ${business.name} on Ekthaa!`,
-            url: `https://ekthaa.com/business/${business.id}`
+            url: `https://ekthaa.app/business/${business.id}`
         };
 
         // Try native Web Share API first (works on mobile)

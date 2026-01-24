@@ -20,7 +20,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // Earth's radius in km
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = 
+    const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -39,21 +39,21 @@ const getCacheKey = (method, params) => {
 const getCachedOrFetch = async (cacheKey, fetchFn) => {
     const now = Date.now();
     const cached = requestCache.get(cacheKey);
-    
+
     if (cached && now - cached.timestamp < CACHE_DURATION) {
         console.log(`[Cache HIT] ${cacheKey.split('-')[0]}`);
         return cached.data;
     }
-    
+
     const data = await fetchFn();
     requestCache.set(cacheKey, { data, timestamp: now });
-    
+
     // Clean old cache entries
     if (requestCache.size > 50) {
         const entries = Array.from(requestCache.entries());
         entries.slice(0, 20).forEach(([key]) => requestCache.delete(key));
     }
-    
+
     return data;
 };
 
@@ -139,65 +139,65 @@ export const businessApi = {
      */
     getPublicOffers: async (options = {}) => {
         const cacheKey = getCacheKey('getPublicOffers', options);
-        
+
         return getCachedOrFetch(cacheKey, async () => {
             try {
                 console.log('Fetching real catalog from Appwrite...');
 
-            // Fetch products
-            const response = await databases.listDocuments(
-                APPWRITE_CONFIG.DATABASE_ID,
-                APPWRITE_CONFIG.COLLECTION_ID_CATALOG
-            );
-
-            console.log(`Appwrite Catalog: Found ${response.total} items`);
-
-            // Fetch businesses to map names
-            let businesses = [];
-            try {
-                const businessResponse = await databases.listDocuments(
+                // Fetch products
+                const response = await databases.listDocuments(
                     APPWRITE_CONFIG.DATABASE_ID,
-                    APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
-                    [
-                        Query.limit(100),
-                        Query.select(['$id', 'name']) // Optimize fetch
-                    ]
+                    APPWRITE_CONFIG.COLLECTION_ID_CATALOG
                 );
-                businesses = businessResponse.documents;
-            } catch (bError) {
-                console.error('Failed to fetch businesses for mapping:', bError);
-            }
 
-            // Create a map for quick lookup
-            const businessMap = {};
-            businesses.forEach(b => {
-                businessMap[b.$id] = b.name;
-            });
+                console.log(`Appwrite Catalog: Found ${response.total} items`);
 
-            // Transform Appwrite documents to UI Product format
-            const products = response.documents.map(offer => {
-                const businessName = businessMap[offer.business_id] || 'Local Seller';
+                // Fetch businesses to map names
+                let businesses = [];
+                try {
+                    const businessResponse = await databases.listDocuments(
+                        APPWRITE_CONFIG.DATABASE_ID,
+                        APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
+                        [
+                            Query.limit(100),
+                            Query.select(['$id', 'name']) // Optimize fetch
+                        ]
+                    );
+                    businesses = businessResponse.documents;
+                } catch (bError) {
+                    console.error('Failed to fetch businesses for mapping:', bError);
+                }
+
+                // Create a map for quick lookup
+                const businessMap = {};
+                businesses.forEach(b => {
+                    businessMap[b.$id] = b.name;
+                });
+
+                // Transform Appwrite documents to UI Product format
+                const products = response.documents.map(offer => {
+                    const businessName = businessMap[offer.business_id] || 'Local Seller';
+                    return {
+                        id: offer.$id,
+                        name: offer.name || 'Untitled Product',
+                        description: offer.description || '',
+                        price: offer.price || 'Ask for Price',
+                        unit: offer.unit || '',
+                        discount_percentage: 0,
+                        business_name: businessName, // Dynamic business name
+                        business_id: offer.business_id,
+                        category: offer.category || 'General',
+                        product_image_url: offer.image_url || null,
+                        image_url: offer.image_url || null,
+                        in_stock: offer.is_visible !== false
+                    };
+                });
+
                 return {
-                    id: offer.$id,
-                    name: offer.name || 'Untitled Product',
-                    description: offer.description || '',
-                    price: offer.price || 'Ask for Price',
-                    unit: offer.unit || '',
-                    discount_percentage: 0,
-                    business_name: businessName, // Dynamic business name
-                    business_id: offer.business_id,
-                    category: offer.category || 'General',
-                    product_image_url: offer.image_url || null,
-                    image_url: offer.image_url || null,
-                    in_stock: offer.is_visible !== false
+                    products: products,
+                    count: products.length,
+                    categories: [...new Set(products.map(p => p.category))]
                 };
-            });
-
-            return {
-                products: products,
-                count: products.length,
-                categories: [...new Set(products.map(p => p.category))]
-            };
             } catch (error) {
                 console.error('Failed to fetch Appwrite catalog:', error);
                 // Fallback to empty if fails
@@ -235,109 +235,109 @@ export const businessApi = {
      */
     getRealBusinesses: async (options = {}) => {
         const cacheKey = getCacheKey('getRealBusinesses', options);
-        
+
         return getCachedOrFetch(cacheKey, async () => {
             try {
                 console.log('Fetching real businesses from Appwrite...');
                 const { limit = 100, offset = 0, search, category, city } = options;
 
-            // FETCH ALL (Limit 1000 to get everything for client-side filtering)
-            // Note: Efficient pagination should happen on server, but for 46 items, client-side is better for UX filtering
-            const fetchLimit = 1000;
+                // FETCH ALL (Limit 1000 to get everything for client-side filtering)
+                // Note: Efficient pagination should happen on server, but for 46 items, client-side is better for UX filtering
+                const fetchLimit = 1000;
 
-            const response = await databases.listDocuments(
-                APPWRITE_CONFIG.DATABASE_ID,
-                APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
-                [
-                    Query.limit(fetchLimit),
-                    Query.orderDesc('$createdAt') // Show newest first
-                    // No offset here, we fetch all and slice later
-                ]
-            );
-
-            console.log(`[getRealBusinesses] Appwrite Raw Count: ${response.total}, Fetched: ${response.documents.length}`);
-
-            // Get user location from options if provided
-            const { userLat, userLng } = options;
-
-            // Transform Appwrite documents to UI Business format
-            let businesses = response.documents.map(doc => {
-                let calculatedDistance = null;
-                
-                // Calculate real distance if user location and business coordinates are available
-                if (userLat && userLng && doc.latitude && doc.longitude) {
-                    calculatedDistance = calculateDistance(userLat, userLng, doc.latitude, doc.longitude);
-                }
-                
-                return {
-                    id: doc.$id,
-                    name: doc.name || 'Untitled Business',
-                    description: doc.description || '',
-                    profile_photo_url: doc.profile_photo_url || null,
-                    category: doc.category || 'General',
-                    city: doc.city || '',
-                    latitude: doc.latitude || null,
-                    longitude: doc.longitude || null,
-                    distance: calculatedDistance !== null ? Number(calculatedDistance.toFixed(1)) : Number((Math.random() * 5).toFixed(1)),
-                    rating: doc.rating || '4.5',
-                    product_count: 0,
-                    phone_number: doc.phone_number || '',
-                    address: doc.address || '',
-                    hasRealDistance: calculatedDistance !== null
-                };
-            });
-
-            // In-memory filtering
-            if (city && city !== 'All Cities') {
-                businesses = businesses.filter(b => b.city && b.city.toLowerCase() === city.toLowerCase());
-            }
-
-            if (category && category !== 'All') {
-                businesses = businesses.filter(b => b.category && b.category.toLowerCase() === category.toLowerCase());
-            }
-
-            if (search) {
-                const query = search.toLowerCase();
-                businesses = businesses.filter(b =>
-                    (b.name && b.name.toLowerCase().includes(query)) ||
-                    (b.description && b.description.toLowerCase().includes(query)) ||
-                    (b.category && b.category.toLowerCase().includes(query))
+                const response = await databases.listDocuments(
+                    APPWRITE_CONFIG.DATABASE_ID,
+                    APPWRITE_CONFIG.COLLECTION_ID_BUSINESSES,
+                    [
+                        Query.limit(fetchLimit),
+                        Query.orderDesc('$createdAt') // Show newest first
+                        // No offset here, we fetch all and slice later
+                    ]
                 );
-            }
 
-            // Extract unique cities and categories from FULL list (before filtering if possible, but here after fetch)
-            // Ideally we want filters based on all data. For now, based on fetched data.
-            const cities = [...new Set(response.documents.map(d => d.city).filter(Boolean))];
-            const categories = [...new Set(response.documents.map(d => d.category).filter(Boolean))];
+                console.log(`[getRealBusinesses] Appwrite Raw Count: ${response.total}, Fetched: ${response.documents.length}`);
 
-            // PRIORITIZE by: 1) Real distance (if available), 2) Profile photos
-            businesses.sort((a, b) => {
-                // If both have real distances, sort by distance (nearest first)
-                if (a.hasRealDistance && b.hasRealDistance) {
-                    return a.distance - b.distance;
+                // Get user location from options if provided
+                const { userLat, userLng } = options;
+
+                // Transform Appwrite documents to UI Business format
+                let businesses = response.documents.map(doc => {
+                    let calculatedDistance = null;
+
+                    // Calculate real distance if user location and business coordinates are available
+                    if (userLat && userLng && doc.latitude && doc.longitude) {
+                        calculatedDistance = calculateDistance(userLat, userLng, doc.latitude, doc.longitude);
+                    }
+
+                    return {
+                        id: doc.$id,
+                        name: doc.name || 'Untitled Business',
+                        description: doc.description || '',
+                        profile_photo_url: doc.profile_photo_url || null,
+                        category: doc.category || 'General',
+                        city: doc.city || '',
+                        latitude: doc.latitude || null,
+                        longitude: doc.longitude || null,
+                        distance: calculatedDistance !== null ? Number(calculatedDistance.toFixed(1)) : Number((Math.random() * 5).toFixed(1)),
+                        rating: doc.rating || '4.5',
+                        product_count: 0,
+                        phone_number: doc.phone_number || '',
+                        address: doc.address || '',
+                        hasRealDistance: calculatedDistance !== null
+                    };
+                });
+
+                // In-memory filtering
+                if (city && city !== 'All Cities') {
+                    businesses = businesses.filter(b => b.city && b.city.toLowerCase() === city.toLowerCase());
                 }
-                
-                // Prioritize businesses with real distance over those without
-                if (a.hasRealDistance && !b.hasRealDistance) return -1;
-                if (!a.hasRealDistance && b.hasRealDistance) return 1;
-                
-                // If no real distances, prioritize businesses with profile photos
-                const aHasImage = a.profile_photo_url ? 1 : 0;
-                const bHasImage = b.profile_photo_url ? 1 : 0;
-                return bHasImage - aHasImage;
-            });
 
-            // Apply Pagination Slice AFTER Filtering
-            const startIndex = offset;
-            const endIndex = startIndex + limit;
-            const paginatedBusinesses = businesses.slice(startIndex, endIndex);
+                if (category && category !== 'All') {
+                    businesses = businesses.filter(b => b.category && b.category.toLowerCase() === category.toLowerCase());
+                }
 
-            return {
-                businesses: paginatedBusinesses,
-                count: businesses.length, // Total filtered count
-                cities: cities,
-                categories: categories
-            };
+                if (search) {
+                    const query = search.toLowerCase();
+                    businesses = businesses.filter(b =>
+                        (b.name && b.name.toLowerCase().includes(query)) ||
+                        (b.description && b.description.toLowerCase().includes(query)) ||
+                        (b.category && b.category.toLowerCase().includes(query))
+                    );
+                }
+
+                // Extract unique cities and categories from FULL list (before filtering if possible, but here after fetch)
+                // Ideally we want filters based on all data. For now, based on fetched data.
+                const cities = [...new Set(response.documents.map(d => d.city).filter(Boolean))];
+                const categories = [...new Set(response.documents.map(d => d.category).filter(Boolean))];
+
+                // PRIORITIZE by: 1) Real distance (if available), 2) Profile photos
+                businesses.sort((a, b) => {
+                    // If both have real distances, sort by distance (nearest first)
+                    if (a.hasRealDistance && b.hasRealDistance) {
+                        return a.distance - b.distance;
+                    }
+
+                    // Prioritize businesses with real distance over those without
+                    if (a.hasRealDistance && !b.hasRealDistance) return -1;
+                    if (!a.hasRealDistance && b.hasRealDistance) return 1;
+
+                    // If no real distances, prioritize businesses with profile photos
+                    const aHasImage = a.profile_photo_url ? 1 : 0;
+                    const bHasImage = b.profile_photo_url ? 1 : 0;
+                    return bHasImage - aHasImage;
+                });
+
+                // Apply Pagination Slice AFTER Filtering
+                const startIndex = offset;
+                const endIndex = startIndex + limit;
+                const paginatedBusinesses = businesses.slice(startIndex, endIndex);
+
+                return {
+                    businesses: paginatedBusinesses,
+                    count: businesses.length, // Total filtered count
+                    cities: cities,
+                    categories: categories
+                };
             } catch (error) {
                 console.error('Failed to fetch Appwrite businesses:', error);
                 return { businesses: [], count: 0, cities: [], categories: [] };
@@ -416,7 +416,7 @@ export const businessApi = {
     getRealBusiness: async (businessId) => {
         try {
             console.log(`[getRealBusiness] Fetching business ${businessId} from Appwrite...`);
-            
+
             // Fetch business from Appwrite
             const business = await databases.getDocument(
                 APPWRITE_CONFIG.DATABASE_ID,
@@ -463,6 +463,7 @@ export const businessApi = {
                     product_image_url: p.image_url || null,
                     image_url: p.image_url || null,
                     business_id: p.business_id,
+                    stock_quantity: p.is_visible !== false ? 1 : 0,
                     is_visible: p.is_visible !== false
                 })),
                 products_count: productResponse.documents.length
