@@ -17,14 +17,30 @@ const BusinessesExplore = () => {
     const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All');
     const [selectedCity, setSelectedCity] = useState(searchParams.get('city') || '');
     const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     const [seoMeta, setSeoMeta] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
+    const [locationLoaded, setLocationLoaded] = useState(false);
 
-    // Get user's location on mount
+    // Get user's location on mount - but don't trigger re-fetch
     useEffect(() => {
+        // Try to get cached location first
+        const cachedLocation = localStorage.getItem('user_location');
+        if (cachedLocation) {
+            try {
+                const location = JSON.parse(cachedLocation);
+                setUserLocation(location);
+                setLocationLoaded(true);
+                console.log('Using cached location:', location);
+            } catch (e) {
+                console.error('Failed to parse cached location:', e);
+            }
+        }
+
+        // Then get fresh location in background
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -33,33 +49,48 @@ const BusinessesExplore = () => {
                         lng: position.coords.longitude
                     };
                     setUserLocation(location);
-                    // Store in localStorage for consistency
+                    setLocationLoaded(true);
+                    // Store in localStorage for next time
                     localStorage.setItem('user_location', JSON.stringify(location));
                     console.log('User location obtained:', location);
                 },
                 (error) => {
                     console.log('Location access denied:', error.message);
+                    setLocationLoaded(true); // Mark as loaded even if denied
                 },
                 { enableHighAccuracy: true, timeout: 5000, maximumAge: 300000 }
             );
+        } else {
+            setLocationLoaded(true);
         }
     }, []);
 
+    // Only load businesses after location is determined (or timeout)
     useEffect(() => {
-        loadBusinesses();
-    }, [selectedCategory, selectedCity, currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
+        if (locationLoaded) {
+            loadBusinesses();
+        }
+    }, [locationLoaded, selectedCategory, selectedCity, currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        // Debounce search
+        // Debounce search - only after location is loaded
+        if (!locationLoaded) return;
+
         const timer = setTimeout(() => {
             setCurrentPage(1); // Reset to page 1 when searching
             loadBusinesses();
         }, 500);
         return () => clearTimeout(timer);
-    }, [searchQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [searchQuery, locationLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const loadBusinesses = async () => {
-        setLoading(true);
+        // Only show full skeleton on initial load
+        if (initialLoading) {
+            setInitialLoading(true);
+        } else {
+            setLoading(true);
+        }
+
         try {
             const data = await businessApi.getRealBusinesses({
                 search: searchQuery,
@@ -104,6 +135,7 @@ const BusinessesExplore = () => {
         } catch (error) {
             console.error('Failed to load businesses:', error);
         } finally {
+            setInitialLoading(false);
             setLoading(false);
         }
     };
@@ -115,7 +147,7 @@ const BusinessesExplore = () => {
         setCurrentPage(1);
     };
 
-    if (loading) {
+    if (initialLoading) {
         return <BusinessesPageSkeleton />;
     }
 
@@ -133,10 +165,23 @@ const BusinessesExplore = () => {
                 {/* Header - Teal Gradient */}
                 <div className="bg-gradient-to-r from-brand-teal to-teal-600 text-white py-8 px-4">
                     <div className="container mx-auto">
-                        <h1 className="text-3xl font-serif font-bold mb-2">Explore Businesses</h1>
-                        <p className="text-lg opacity-90">
-                            {totalCount} businesses {selectedCity ? `in ${selectedCity}` : 'on Ekthaa'}
-                        </p>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <h1 className="text-3xl font-serif font-bold mb-2">Explore Businesses</h1>
+                                <p className="text-lg opacity-90">
+                                    {totalCount} businesses {selectedCity ? `in ${selectedCity}` : 'on Ekthaa'}
+                                </p>
+                            </div>
+                            {loading && !initialLoading && (
+                                <div className="flex items-center gap-2 text-sm opacity-75">
+                                    <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <span>Updating...</span>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
 
