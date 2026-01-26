@@ -18,6 +18,8 @@ import AboutNew from './pages/AboutNew';
 import CareersNew from './pages/CareersNew';
 import Tracker from './pages/Tracker';
 import Analytics from './pages/Analytics';
+import AnalyticsNew from './pages/AnalyticsNew';
+import AnalyticsAuth from './components/AnalyticsAuth';
 
 // Customer app pages
 import Login from './pages/customer/Login';
@@ -32,21 +34,15 @@ import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import DeleteAccount from './pages/DeleteAccount';
 
+function PageTracker() {
+  usePageTracking();
+  return null;
+}
+
 function AppContent() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [currentCity, setCurrentCity] = useState('Hyderabad');
-  const { loading } = useAuth();
-
-  // Track page views on route changes
-  usePageTracking();
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-brand-cream">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-teal"></div>
-      </div>
-    );
-  }
+  const { loading, user } = useAuth();
 
   // Unified app-first layout for all pages
   const AppLayout = ({ children, showChat = true }) => (
@@ -54,7 +50,14 @@ function AppContent() {
       <div className="flex-1 flex flex-col transition-all duration-300 ease-in-out w-full">
         <Header currentCity={currentCity} setCurrentCity={setCurrentCity} />
         <main className="flex-grow pb-16 md:pb-0">
-          {children}
+          {/* Only show loader if auth is loading and we don't have a cached user */}
+          {loading && !user ? (
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-teal"></div>
+            </div>
+          ) : (
+            children
+          )}
         </main>
         <FooterNew />
       </div>
@@ -77,6 +80,7 @@ function AppContent() {
 
   return (
     <div className="app">
+      <PageTracker />
       <Routes>
         {/* Main pages with app-first design */}
         <Route path="/" element={<AppLayout><HomeNew currentCity={currentCity} /></AppLayout>} />
@@ -101,8 +105,8 @@ function AppContent() {
         <Route path="/careers" element={<AppLayout><CareersNew /></AppLayout>} />
         <Route path="/tracker" element={<AppLayout showChat={false}><Tracker /></AppLayout>} />
 
-        {/* Analytics Dashboard - Hidden route, no navigation links */}
-        <Route path="/analytics" element={<AppLayout showChat={false}><Analytics /></AppLayout>} />
+        {/* Analytics Dashboard - Password protected */}
+        <Route path="/analytics" element={<AnalyticsAuth><AnalyticsNew /></AnalyticsAuth>} />
 
         {/* Legal pages */}
         <Route path="/terms" element={<AppLayout showChat={false}><Terms /></AppLayout>} />

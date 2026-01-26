@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { initializeLifetimeAnalytics, cleanupLifetimeAnalytics } from '../services/lifetimeAnalyticsService';
 
 const AuthContext = createContext();
 
@@ -12,11 +13,21 @@ export const AuthProvider = ({ children }) => {
         const storedUser = localStorage.getItem('user');
         const token = localStorage.getItem('token');
 
+        const userId = storedUser ? JSON.parse(storedUser).id : null;
+        
+        // Initialize lifetime analytics with user ID if available
+        initializeLifetimeAnalytics(userId);
+
         if (storedUser && token) {
             setUser(JSON.parse(storedUser));
             setIsAuthenticated(true);
         }
         setLoading(false);
+
+        // Cleanup on unmount
+        return () => {
+            cleanupLifetimeAnalytics();
+        };
     }, []);
 
     const login = async (userData, token) => {
