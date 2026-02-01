@@ -438,14 +438,33 @@ export const businessApi = {
                 ]
             );
 
-            // Format business data
+            // Fetch offers for this business
+            let offersData = [];
+            try {
+                const offersResponse = await databases.listDocuments(
+                    APPWRITE_CONFIG.DATABASE_ID,
+                    'offers', // offers collection
+                    [
+                        Query.equal('business_id', businessId),
+                        Query.limit(50)
+                    ]
+                );
+                offersData = offersResponse.documents || [];
+            } catch (offersError) {
+                console.log('[getRealBusiness] No offers collection or no offers found');
+            }
+
+            // Format business data with ALL fields
             const formattedBusiness = {
                 id: business.$id,
                 name: business.name || 'Unnamed Business',
                 description: business.description || '',
                 business_category: business.business_category || business.category || 'Other',
                 category: business.business_category || business.category || 'Other',
+                subcategory: business.subcategory || '',
                 city: business.city || '',
+                state: business.state || '',
+                pincode: business.pincode || '',
                 phone_number: business.phone_number || '',
                 email: business.email || '',
                 address: business.address || '',
@@ -453,23 +472,50 @@ export const businessApi = {
                 shop_photos: business.shop_photos || [],
                 latitude: business.latitude || null,
                 longitude: business.longitude || null,
+                // Additional business details
+                operating_hours: business.operating_hours || '',
+                gst_number: business.gst_number || '',
+                website: business.website || '',
+                // Social media links
+                instagram: business.instagram || '',
+                facebook: business.facebook || '',
+                twitter: business.twitter || '',
+                linkedin: business.linkedin || '',
+                youtube: business.youtube || '',
+                // Products
                 products: productResponse.documents.map(p => ({
                     id: p.$id,
                     name: p.name || 'Untitled Product',
                     description: p.description || '',
                     price: p.price || 0,
                     unit: p.unit || '',
+                    unit_quantity: p.unit_quantity || 0,
+                    moq: p.moq || 1,
                     category: p.category || 'General',
                     product_image_url: p.image_url || null,
                     image_url: p.image_url || null,
                     business_id: p.business_id,
                     stock_quantity: p.is_visible !== false ? 1 : 0,
+                    in_stock: p.is_visible !== false,
                     is_visible: p.is_visible !== false
                 })),
-                products_count: productResponse.documents.length
+                products_count: productResponse.documents.length,
+                // Offers and vouchers
+                offers: offersData.map(o => ({
+                    id: o.$id,
+                    offer_name: o.offer_name || o.title || '',
+                    description: o.description || '',
+                    offer_type: o.offer_type || 'offer',
+                    discount_percentage: o.discount_percentage || 0,
+                    discount_amount: o.discount_amount || 0,
+                    validity: o.validity || o.valid_until || '',
+                    min_purchase_amount: o.min_purchase_amount || 0,
+                    ekthaa_cash_required: o.ekthaa_cash_required || 0
+                })),
+                offers_count: offersData.length
             };
 
-            console.log(`[getRealBusiness] Fetched business with ${formattedBusiness.products_count} products`);
+            console.log(`[getRealBusiness] Fetched business with ${formattedBusiness.products_count} products, ${formattedBusiness.offers_count} offers`);
             return formattedBusiness;
 
         } catch (error) {
