@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useUserLocation } from '../hooks/useLocation';
 import { CITIES } from '../data/mockData';
 
 const Header = ({ currentCity, setCurrentCity }) => {
@@ -10,35 +11,16 @@ const Header = ({ currentCity, setCurrentCity }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { user, isAuthenticated, logout } = useAuth();
 
-    // Auto-detect location on mount
+    // Use shared location hook
+    const { city: detectedCity, detectLocation } = useUserLocation();
+
+    // Sync detected city with parent state
     useEffect(() => {
-        detectLocation();
-    }, []);
+        if (detectedCity && detectedCity !== 'Hyderabad') {
+            setCurrentCity(detectedCity);
+        }
+    }, [detectedCity, setCurrentCity]);
 
-    const detectLocation = () => {
-        if (!('geolocation' in navigator)) return;
-
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                try {
-                    const { latitude, longitude } = position.coords;
-                    // Store location for sorting
-                    localStorage.setItem('user_location', JSON.stringify({ lat: latitude, lng: longitude }));
-
-                    const response = await fetch(
-                        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-                    );
-                    const data = await response.json();
-                    const city = data.address.city || data.address.town || data.address.village || 'Hyderabad';
-                    setCurrentCity(city);
-                } catch (error) {
-                    console.error("Error fetching city:", error);
-                }
-            },
-            (error) => console.error("Geolocation error:", error),
-            { timeout: 10000, enableHighAccuracy: true, maximumAge: 300000 }
-        );
-    };
 
     const handleSearch = () => {
         if (searchQuery.trim()) {
