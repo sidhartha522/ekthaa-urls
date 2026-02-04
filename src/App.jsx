@@ -32,6 +32,7 @@ import DetailView from './pages/customer/DetailView';
 // Keep Terms, Privacy, DeleteAccount for legal pages
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import PrivacyCustomer from './pages/PrivacyCustomer';
 import DeleteAccount from './pages/DeleteAccount';
 
 function PageTracker() {
@@ -111,6 +112,7 @@ function AppContent() {
         {/* Legal pages */}
         <Route path="/terms" element={<AppLayout showChat={false}><Terms /></AppLayout>} />
         <Route path="/privacy" element={<AppLayout showChat={false}><Privacy /></AppLayout>} />
+        <Route path="/privacy-customer" element={<AppLayout showChat={false}><PrivacyCustomer /></AppLayout>} />
         <Route path="/delete-account" element={<AppLayout showChat={false}><DeleteAccount /></AppLayout>} />
 
         {/* Auth pages */}
