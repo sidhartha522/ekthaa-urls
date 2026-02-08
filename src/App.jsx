@@ -34,6 +34,7 @@ import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import PrivacyCustomer from './pages/PrivacyCustomer';
 import DeleteAccount from './pages/DeleteAccount';
+import Support from './pages/Support';
 
 function PageTracker() {
   usePageTracking();
@@ -114,6 +115,7 @@ function AppContent() {
         <Route path="/privacy" element={<AppLayout showChat={false}><Privacy /></AppLayout>} />
         <Route path="/privacy-customer" element={<AppLayout showChat={false}><PrivacyCustomer /></AppLayout>} />
         <Route path="/delete-account" element={<AppLayout showChat={false}><DeleteAccount /></AppLayout>} />
+        <Route path="/support" element={<AppLayout showChat={false}><Support /></AppLayout>} />
 
         {/* Auth pages */}
         <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
