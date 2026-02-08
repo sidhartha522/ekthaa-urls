@@ -43,7 +43,14 @@ const HomeNew = () => {
                     to="/privacy"
                     className="text-brand-teal hover:underline font-medium text-lg"
                 >
-                    Privacy Policy
+                    Privacy Policy (Business)
+                </Link>
+
+                <Link
+                    to="/privacy-customer"
+                    className="text-brand-teal hover:underline font-medium text-lg"
+                >
+                    Privacy Policy (Customer)
                 </Link>
 
                 <Link
