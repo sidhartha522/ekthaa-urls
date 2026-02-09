@@ -35,6 +35,7 @@ import Privacy from './pages/Privacy';
 import PrivacyCustomer from './pages/PrivacyCustomer';
 import DeleteAccount from './pages/DeleteAccount';
 import Support from './pages/Support';
+import ComingSoon from './pages/ComingSoon';
 
 function PageTracker() {
   usePageTracking();
@@ -116,6 +117,7 @@ function AppContent() {
         <Route path="/privacy-customer" element={<AppLayout showChat={false}><PrivacyCustomer /></AppLayout>} />
         <Route path="/delete-account" element={<AppLayout showChat={false}><DeleteAccount /></AppLayout>} />
         <Route path="/support" element={<AppLayout showChat={false}><Support /></AppLayout>} />
+        <Route path="/coming-soon" element={<AppLayout showChat={false} showHeader={false}><ComingSoon /></AppLayout>} />
 
         {/* Auth pages */}
         <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
