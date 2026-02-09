@@ -65,6 +65,26 @@ const LinkInfo = () => {
           Join WhatsApp Group
         </a>
       )}
+      {link === 'internships' && (
+        <a
+          href="https://internships.ekthaa.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-4 bg-brand-teal text-white px-8 py-3 rounded-xl font-bold text-lg text-center hover:bg-teal-600 transition shadow-lg"
+        >
+          Apply at internships.ekthaa.app
+        </a>
+      )}
+      {link === 'student-community' && (
+        <a
+          href="https://chat.whatsapp.com/IRKgSdE3KtsAiCddDNlHfc"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-4 bg-brand-teal text-white px-8 py-3 rounded-xl font-bold text-lg text-center hover:bg-teal-600 transition shadow-lg"
+        >
+          Join WhatsApp Group
+        </a>
+      )}
       <Link to="/" className="bg-brand-teal text-white px-8 py-3 rounded-xl font-bold text-lg text-center hover:bg-teal-600 transition shadow-lg">Back to Home</Link>
     </div>
   );
