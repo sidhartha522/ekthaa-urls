@@ -47,7 +47,7 @@ const HomeNew = () => {
                   <a href="https://play.google.com/store/apps/details?id=com.ekthaa.business" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
                       <div className="flex items-center justify-between">
                           <span className="text-white font-medium text-base">Ekthaa Business</span>
-                          <Link to="/link-info/ekthaa-business" className="text-white text-xs hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
+                          <Link to="/link-info/ekthaa-business" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
                       </div>
                   </a>
                 </div>
@@ -68,7 +68,7 @@ const HomeNew = () => {
                   <a href="https://chat.whatsapp.com/L82Bpsj3OD60M5MLxTFRH2" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
                       <div className="flex items-center justify-between">
                           <span className="text-white font-medium text-base">Ekthaa Business & Builder Community</span>
-                          <Link to="/link-info/builder-community" className="text-white text-xs hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
+                          <Link to="/link-info/builder-community" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
                       </div>
                   </a>
                 </div>
@@ -78,7 +78,7 @@ const HomeNew = () => {
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLSclln7rE1cpVKWDTAaPxx0wsc6UM83X_HWxzEg8Hl-XJkXkEg/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
                       <div className="flex items-center justify-between">
                           <span className="text-white font-medium text-base">College Fest Student Stall</span>
-                          <Link to="/link-info/student-stall" className="text-white text-xs hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
+                          <Link to="/link-info/student-stall" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
                       </div>
                   </a>
                 </div>
@@ -88,7 +88,7 @@ const HomeNew = () => {
                   <a href="https://internships.ekthaa.app" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
                       <div className="flex items-center justify-between">
                           <span className="text-white font-medium text-base">Internships</span>
-                          <Link to="/link-info/internships" className="text-white text-xs hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
+                          <Link to="/link-info/internships" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
                       </div>
                   </a>
                 </div>
@@ -98,7 +98,7 @@ const HomeNew = () => {
                   <a href="https://ekthaa.com" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
                       <div className="flex items-center justify-between">
                           <span className="text-white font-medium text-base">Ekthaa AI</span>
-                          <Link to="/link-info/ekthaa-ai" className="text-white text-xs hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
+                          <Link to="/link-info/ekthaa-ai" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
                       </div>
                   </a>
                 </div>
@@ -119,7 +119,7 @@ const HomeNew = () => {
                   <a href="https://chat.whatsapp.com/IRKgSdE3KtsAiCddDNlHfc" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
                       <div className="flex items-center justify-between">
                           <span className="text-white font-medium text-base">Ekthaa Student Community</span>
-                          <Link to="/link-info/student-community" className="text-white text-xs hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
+                          <Link to="/link-info/student-community" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
                       </div>
                   </a>
                 </div>
