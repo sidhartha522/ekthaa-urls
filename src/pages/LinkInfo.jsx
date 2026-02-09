@@ -55,6 +55,16 @@ const LinkInfo = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-brand-beige px-4 py-12">
       <h1 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mb-6 text-center">{info.title}</h1>
       <p className="text-gray-700 text-lg text-center max-w-2xl mb-8">{info.description}</p>
+      {link === 'builder-community' && (
+        <a
+          href="https://chat.whatsapp.com/L82Bpsj3OD60M5MLxTFRH2"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-4 bg-brand-teal text-white px-8 py-3 rounded-xl font-bold text-lg text-center hover:bg-teal-600 transition shadow-lg"
+        >
+          Join WhatsApp Group
+        </a>
+      )}
       <Link to="/" className="bg-brand-teal text-white px-8 py-3 rounded-xl font-bold text-lg text-center hover:bg-teal-600 transition shadow-lg">Back to Home</Link>
     </div>
   );
