@@ -63,6 +63,16 @@ const HomeNew = () => {
                     </Link>
                 </div>
 
+                {/* Business & Builder Community */}
+                <div className="group">
+                  <a href="https://chat.whatsapp.com/L82Bpsj3OD60M5MLxTFRH2" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
+                      <div className="flex items-center justify-between">
+                          <span className="text-white font-medium text-base">Ekthaa Business & Builder Community</span>
+                          <Link to="/link-info/builder-community" className="text-white text-xs hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
+                      </div>
+                  </a>
+                </div>
+
                 {/* Student Stall Application */}
                 <div className="group">
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLSclln7rE1cpVKWDTAaPxx0wsc6UM83X_HWxzEg8Hl-XJkXkEg/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
@@ -102,16 +112,6 @@ const HomeNew = () => {
                     <Link to="/coming-soon" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
                         App Store
                     </Link>
-                </div>
-
-                {/* Business & Builder Community */}
-                <div className="group">
-                  <a href="https://chat.whatsapp.com/L82Bpsj3OD60M5MLxTFRH2" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                          <span className="text-white font-medium text-base">Ekthaa Business & Builder Community</span>
-                          <Link to="/link-info/builder-community" className="text-white text-xs hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
-                      </div>
-                  </a>
                 </div>
 
                 {/* Student Community */}
