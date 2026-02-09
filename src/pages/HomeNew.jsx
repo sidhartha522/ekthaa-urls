@@ -41,13 +41,13 @@ const HomeNew = () => {
             {/* Linktree Style Links Section */}
             <div className="w-full max-w-2xl space-y-4 mb-8 px-4">
                 
-                {/* Ekthaa Business - Big Button */}
-                <a href="https://play.google.com/store/apps/details?id=com.ekthaa.business" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-gray-800 transition shadow-md">
-                    📱 Ekthaa Business
-                </a>
-                <p className="text-gray-600 text-sm text-center px-2 leading-relaxed">
-                    Ekthaa Business helps customers near you discover your store. When customers search for a product on Ekthaa AI or Google, your business can show up. You get a shareable business page with your location, products, offers, and social links. It also works as an all-in-one business app to manage credits, invoices, offers, products, and stock.
-                </p>
+                {/* Ekthaa Business - Big Button with Know More */}
+                <div className="relative w-full">
+                  <Link to="/link-info/ekthaa-business" className="absolute right-2 top-2 bg-brand-teal text-white px-3 py-1 rounded-full text-xs font-medium hover:bg-teal-600 transition z-10">Know More</Link>
+                  <a href="https://play.google.com/store/apps/details?id=com.ekthaa.business" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-gray-800 transition shadow-md">
+                      📱 Ekthaa Business
+                  </a>
+                </div>
                 <div className="flex gap-2 justify-center">
                     <a href="https://play.google.com/store/apps/details?id=com.ekthaa.business" target="_blank" rel="noopener noreferrer" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-sm font-medium">
                         <i className="fab fa-google-play mr-1"></i>Play Store
@@ -61,28 +61,28 @@ const HomeNew = () => {
                 </div>
 
                 {/* Student Stall Application */}
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSclln7rE1cpVKWDTAaPxx0wsc6UM83X_HWxzEg8Hl-XJkXkEg/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-gray-800 transition shadow-md">
-                    🎯 Student Stall Application (Play & Win)
-                </a>
-                <p className="text-gray-600 text-sm text-center px-2 leading-relaxed">
-                    Run a Play & Win stall at your college fest and engage students through fun games. All gifts and rewards will be provided by our brand sponsors—you just manage the stall.
-                </p>
+                <div className="relative w-full">
+                  <Link to="/link-info/student-stall" className="absolute right-2 top-2 bg-brand-teal text-white px-3 py-1 rounded-full text-xs font-medium hover:bg-teal-600 transition z-10">Know More</Link>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSclln7rE1cpVKWDTAaPxx0wsc6UM83X_HWxzEg8Hl-XJkXkEg/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-gray-800 transition shadow-md">
+                      🎯 Student Stall Application (Play & Win)
+                  </a>
+                </div>
 
                 {/* Internships at Ekthaa */}
-                <a href="https://internships.ekthaa.app" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-gray-800 transition shadow-md">
-                    🚀 Internships at Ekthaa
-                </a>
-                <p className="text-gray-600 text-sm text-center px-2 leading-relaxed">
-                    Ekthaa offers unpaid internships where you'll work directly with the founding team on real, production-level tasks. Apply only if you have extraordinary skills or deep passion for startups and want real startup exposure.
-                </p>
+                <div className="relative w-full">
+                  <Link to="/link-info/internships" className="absolute right-2 top-2 bg-brand-teal text-white px-3 py-1 rounded-full text-xs font-medium hover:bg-teal-600 transition z-10">Know More</Link>
+                  <a href="https://internships.ekthaa.app" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-gray-800 transition shadow-md">
+                      🚀 Internships at Ekthaa
+                  </a>
+                </div>
 
                 {/* Ekthaa AI */}
-                <a href="https://ekthaa.com" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-gray-800 transition shadow-md">
-                    🤖 Ekthaa AI
-                </a>
-                <p className="text-gray-600 text-sm text-center px-2 leading-relaxed mb-2">
-                    Find the best deals, products, and businesses around you in seconds—by talking to AI. Personalized, local, and intelligent discovery built for students and local businesses.
-                </p>
+                <div className="relative w-full">
+                  <Link to="/link-info/ekthaa-ai" className="absolute right-2 top-2 bg-brand-teal text-white px-3 py-1 rounded-full text-xs font-medium hover:bg-teal-600 transition z-10">Know More</Link>
+                  <a href="https://ekthaa.com" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-gray-800 transition shadow-md">
+                      🤖 Ekthaa AI
+                  </a>
+                </div>
                 <div className="flex gap-2 justify-center">
                     <a href="https://ekthaa.com" target="_blank" rel="noopener noreferrer" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-sm font-medium">
                         🌐 Web
@@ -96,20 +96,20 @@ const HomeNew = () => {
                 </div>
 
                 {/* Business & Builder Community */}
-                <a href="https://chat.whatsapp.com/L82Bpsj3OD60M5MLxTFRH2" target="_blank" rel="noopener noreferrer" className="block w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-green-600 transition shadow-md">
-                    🏗️ Business & Builder Community
-                </a>
-                <p className="text-gray-600 text-sm text-center px-2 leading-relaxed">
-                    A community for business owners, founders, and builders to connect, learn, and grow together. Share insights, explore collaborations, and build real things - not just talk. We also conduct a Business & Builder Walk at LB Nagar Circle every weekend 🚶‍♂️🤝
-                </p>
+                <div className="relative w-full">
+                  <Link to="/link-info/builder-community" className="absolute right-2 top-2 bg-brand-teal text-white px-3 py-1 rounded-full text-xs font-medium hover:bg-teal-600 transition z-10">Know More</Link>
+                  <a href="https://chat.whatsapp.com/L82Bpsj3OD60M5MLxTFRH2" target="_blank" rel="noopener noreferrer" className="block w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-green-600 transition shadow-md">
+                      🏗️ Business & Builder Community
+                  </a>
+                </div>
 
                 {/* Student Community */}
-                <a href="https://chat.whatsapp.com/IRKgSdE3KtsAiCddDNlHfc" target="_blank" rel="noopener noreferrer" className="block w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-green-600 transition shadow-md">
-                    🎓 Ekthaa Student Community
-                </a>
-                <p className="text-gray-600 text-sm text-center px-2 leading-relaxed">
-                    A community for students to learn, explore opportunities, and build together. Internships, events, startup exposure, freelance gigs, paid opportunities, and real-world learning beyond college.
-                </p>
+                <div className="relative w-full">
+                  <Link to="/link-info/student-community" className="absolute right-2 top-2 bg-brand-teal text-white px-3 py-1 rounded-full text-xs font-medium hover:bg-teal-600 transition z-10">Know More</Link>
+                  <a href="https://chat.whatsapp.com/IRKgSdE3KtsAiCddDNlHfc" target="_blank" rel="noopener noreferrer" className="block w-full bg-green-500 text-white px-6 py-4 rounded-xl font-bold text-lg text-center hover:bg-green-600 transition shadow-md">
+                      🎓 Ekthaa Student Community
+                  </a>
+                </div>
 
             </div>
         </div>

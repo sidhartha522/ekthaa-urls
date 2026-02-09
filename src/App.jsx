@@ -20,6 +20,7 @@ import Tracker from './pages/Tracker';
 import Analytics from './pages/Analytics';
 import AnalyticsNew from './pages/AnalyticsNew';
 import AnalyticsAuth from './components/AnalyticsAuth';
+import LinkInfo from './pages/LinkInfo';
 
 // Customer app pages
 import Login from './pages/customer/Login';
@@ -36,6 +37,7 @@ import PrivacyCustomer from './pages/PrivacyCustomer';
 import DeleteAccount from './pages/DeleteAccount';
 import Support from './pages/Support';
 import ComingSoon from './pages/ComingSoon';
+import EkthaaBusiness from './pages/EkthaaBusiness';
 
 function PageTracker() {
   usePageTracking();
@@ -118,6 +120,8 @@ function AppContent() {
         <Route path="/delete-account" element={<AppLayout showChat={false}><DeleteAccount /></AppLayout>} />
         <Route path="/support" element={<AppLayout showChat={false}><Support /></AppLayout>} />
         <Route path="/coming-soon" element={<AppLayout showChat={false} showHeader={false}><ComingSoon /></AppLayout>} />
+        <Route path="/link-info/:link" element={<AppLayout showChat={false} showHeader={false}><LinkInfo /></AppLayout>} />
+        <Route path="/ekthaa-business-details" element={<AppLayout showChat={false} showHeader={false}><EkthaaBusiness /></AppLayout>} />
 
         {/* Auth pages */}
         <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
@@ -125,6 +129,9 @@ function AppContent() {
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
+
+        {/* Link Info Page */}
+        <Route path="/link-info/:link" element={<AppLayout showChat={false} showHeader={false}><LinkInfo /></AppLayout>} />
       </Routes>
     </div>
   );
