@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
  */
 const SEO = ({
     title = 'Ekthaa - Local Business Directory',
-    description = 'Discover local businesses, products, and services near you. Connect with trusted businesses and manage your credit transactions.',
+    description = 'Ekthaa - Connecting Businesses and Customers',
     keywords = 'local business, products, services, credit book, Ekthaa, India',
     image = '/og-image.png',
     url = '',

@@ -106,7 +106,7 @@ const ListingView = () => {
                         </h3>
                         <p className="text-gray-500 mb-4">
                             {isAllBusinesses
-                                ? "Discover local businesses near you - no ads, just real local commerce."
+                                ? "Ekthaa - Connecting Businesses and Customers"
                                 : `Find trusted ${categoryName} businesses in your area.`
                             }
                         </p>

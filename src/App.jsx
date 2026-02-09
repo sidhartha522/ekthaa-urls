@@ -47,10 +47,10 @@ function AppContent() {
   const { loading, user } = useAuth();
 
   // Unified app-first layout for all pages
-  const AppLayout = ({ children, showChat = true }) => (
+  const AppLayout = ({ children, showChat = true, showHeader = true }) => (
     <div className="min-h-screen flex font-sans bg-brand-cream text-brand-text">
       <div className="flex-1 flex flex-col transition-all duration-300 ease-in-out w-full">
-        <Header currentCity={currentCity} setCurrentCity={setCurrentCity} />
+        {showHeader && <Header currentCity={currentCity} setCurrentCity={setCurrentCity} />}
         <main className="flex-grow pb-16 md:pb-0">
           {/* Only show loader if auth is loading and we don't have a cached user */}
           {loading && !user ? (
@@ -85,7 +85,7 @@ function AppContent() {
       <PageTracker />
       <Routes>
         {/* Main pages with app-first design */}
-        <Route path="/" element={<AppLayout><HomeNew currentCity={currentCity} /></AppLayout>} />
+        <Route path="/" element={<AppLayout showChat={false} showHeader={false}><HomeNew /></AppLayout>} />
 
         {/* Explore pages - Products and Businesses */}
         {/* Product Catalog ("Products Page") */}

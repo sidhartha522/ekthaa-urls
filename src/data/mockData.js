@@ -28,7 +28,7 @@ export const SEASONAL_ESSENTIALS = [
 
 export const APP_FEATURES = [
     {
-        title: "Discover Local Businesses",
+        title: "Ekthaa - Connecting Businesses and Customers",
         description: "Find nearby shops, services & products easily with our smart search",
         icon: "fa-search-location",
         gradient: "from-brand-teal to-teal-600"

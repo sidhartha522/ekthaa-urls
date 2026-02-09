@@ -32,7 +32,7 @@ const AboutNew = () => {
                             inventory, track customers, and grow their presence - all from their smartphone.
                         </p>
                         <p className="text-gray-600">
-                            For customers, we provide an easy way to discover local businesses, manage credit transactions,
+                            For customers, we provide an easy way to connect with businesses and manage credit transactions,
                             and support their neighborhood shops.
                         </p>
                     </div>
