@@ -37,6 +37,9 @@ const LinkInfo = () => {
     if (link === 'ekthaa-business') {
       navigate('/ekthaa-business-details');
     }
+    if (link === 'student-stall') {
+      navigate('/student-stall-details');
+    }
   }, [link, navigate]);
 
   if (!info) {

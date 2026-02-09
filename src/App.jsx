@@ -37,6 +37,7 @@ import PrivacyCustomer from './pages/PrivacyCustomer';
 import DeleteAccount from './pages/DeleteAccount';
 import Support from './pages/Support';
 import ComingSoon from './pages/ComingSoon';
+import StudentStallInfo from './pages/StudentStallInfo';
 import EkthaaBusiness from './pages/EkthaaBusiness';
 
 function PageTracker() {
@@ -122,6 +123,7 @@ function AppContent() {
         <Route path="/coming-soon" element={<AppLayout showChat={false} showHeader={false}><ComingSoon /></AppLayout>} />
         <Route path="/link-info/:link" element={<AppLayout showChat={false} showHeader={false}><LinkInfo /></AppLayout>} />
         <Route path="/ekthaa-business-details" element={<AppLayout showChat={false} showHeader={false}><EkthaaBusiness /></AppLayout>} />
+        <Route path="/student-stall-details" element={<AppLayout showChat={false} showHeader={false}><StudentStallInfo /></AppLayout>} />
 
         {/* Auth pages */}
         <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
