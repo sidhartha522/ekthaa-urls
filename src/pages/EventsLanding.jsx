@@ -77,6 +77,22 @@ const rewards = [
 
 const EventsLanding = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+    const handlePlanClick = (planName) => {
+        let msg = '';
+        if (planName === 'Free Plan') {
+            msg = 'Hi Ekthaa, I want to include my brand in your college stalls\nI am interested in free plan';
+        } else if (planName === 'Starter Promotion') {
+            msg = 'Hi Ekthaa, I want to include my brand in your college stalls\nI am interested in the Starter Promotion plan';
+        } else if (planName === 'Brand Visibility') {
+            msg = 'Hi Ekthaa, I want to include my brand in your college stalls\nI am interested in the Brand Visibility plan';
+        } else if (planName === 'Co-Sponsor') {
+            msg = 'Hi Ekthaa, I want to include my brand in your college stalls\nI am interested in the Co-Sponsor plan';
+        } else {
+            msg = 'Hi Ekthaa, I want to include my brand in your college stalls';
+        }
+        const url = `https://wa.me/916305964802?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+    };
 
     const scrollTo = (id) => {
         setMobileMenuOpen(false);
@@ -301,9 +317,12 @@ const EventsLanding = () => {
                                         </li>
                                     ))}
                                 </ul>
-                                <a href={CTA_LINK} target="_blank" rel="noopener noreferrer" className="mt-6 block text-center bg-brand-teal text-white font-semibold py-3 rounded-full hover:bg-teal-600 transition-all shadow-sm hover:shadow-md text-sm">
+                                <button
+                                    className="mt-6 block w-full text-center bg-brand-teal text-white font-semibold py-3 rounded-full hover:bg-teal-600 transition-all shadow-sm hover:shadow-md text-sm"
+                                    onClick={() => handlePlanClick(plan.name)}
+                                >
                                     Get Started
-                                </a>
+                                </button>
                             </div>
                         ))}
                     </div>
