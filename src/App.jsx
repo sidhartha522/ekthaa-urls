@@ -47,6 +47,12 @@ function PageTracker() {
   return null;
 }
 
+// External redirect component for Play Store and other external links
+function ExternalRedirect({ url }) {
+  window.location.href = url;
+  return null;
+}
+
 function AppContent() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [currentCity, setCurrentCity] = useState('Hyderabad');
@@ -92,8 +98,6 @@ function AppContent() {
       <Routes>
         {/* Main pages with app-first design */}
         <Route path="/" element={<AppLayout showChat={false} showHeader={false}><HomeNew /></AppLayout>} />
-        {/* Redirect /business to Play Store */}
-        <Route path="/business" element={<Navigate to="https://play.google.com/store/apps/details?id=com.ekthaa.business" replace />} />
 
         {/* Explore pages - Products and Businesses */}
         {/* Product Catalog ("Products Page") */}
@@ -134,6 +138,9 @@ function AppContent() {
         {/* Auth pages */}
         <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
         <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
+
+        {/* External redirects */}
+        <Route path="/business" element={<ExternalRedirect url="https://play.google.com/store/apps/details?id=com.ekthaa.business" />} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
