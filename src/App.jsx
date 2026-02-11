@@ -39,6 +39,7 @@ import Support from './pages/Support';
 import ComingSoon from './pages/ComingSoon';
 import StudentStallInfo from './pages/StudentStallInfo';
 import EkthaaBusiness from './pages/EkthaaBusiness';
+import EventsLanding from './pages/EventsLanding';
 
 function PageTracker() {
   usePageTracking();
@@ -124,6 +125,7 @@ function AppContent() {
         <Route path="/link-info/:link" element={<AppLayout showChat={false} showHeader={false}><LinkInfo /></AppLayout>} />
         <Route path="/ekthaa-business-details" element={<AppLayout showChat={false} showHeader={false}><EkthaaBusiness /></AppLayout>} />
         <Route path="/student-stall-details" element={<AppLayout showChat={false} showHeader={false}><StudentStallInfo /></AppLayout>} />
+        <Route path="/events" element={<AuthLayout><EventsLanding /></AuthLayout>} />
 
         {/* Auth pages */}
         <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />

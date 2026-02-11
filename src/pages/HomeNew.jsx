@@ -33,10 +33,12 @@ const HomeNew = () => {
             </div>
             
             {/* Logo/Brand */}
-            <div className="text-center mb-16 mt-16 flex flex-col items-center">
-                <img src="/logo.png" alt="Ekthaa Logo" className="h-24 w-24 mb-6" />
-                <h1 className="text-3xl md:text-4xl font-serif font-semibold tracking-tight text-gray-900 mb-3">Ekthaa</h1>
-                <p className="text-gray-500 text-sm tracking-wide">Connecting Businesses and Customers</p>
+            <div className="mb-16 mt-16 flex flex-row items-center justify-start w-full max-w-md">
+                <img src="/logo.png" alt="Ekthaa Logo" className="h-20 w-20 mr-4" />
+                <div className="flex flex-col justify-center">
+                    <h1 className="text-3xl md:text-4xl font-serif font-semibold tracking-tight text-gray-900 mb-1">Ekthaa</h1>
+                    <p className="text-gray-500 text-sm tracking-wide whitespace-nowrap">Connecting Businesses and Customers</p>
+                </div>
             </div>
 
             {/* Linktree Style Links Section */}
