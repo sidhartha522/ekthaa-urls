@@ -1,131 +1,199 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const HomeNew = () => {
-    const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.ekthaa.business';
-
-    const [menuOpen, setMenuOpen] = useState(false);
-
     return (
-        <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-8 relative">
-            {/* Top Bar with Hamburger */}
-            <div className="absolute top-0 left-0 w-full flex justify-start items-center px-6 py-5 z-20">
-                <button
-                    className="flex flex-col justify-center items-center w-10 h-10 focus:outline-none group"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    aria-label="Open menu"
-                >
-                    <span className={`block h-0.5 w-6 bg-gray-800 mb-1.5 transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                    <span className={`block h-0.5 w-6 bg-gray-800 mb-1.5 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}></span>
-                    <span className={`block h-0.5 w-6 bg-gray-800 transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
-                </button>
-                {/* Overlay menu */}
-                {menuOpen && (
-                    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-20 z-30" onClick={() => setMenuOpen(false)}></div>
-                )}
-                <nav className={`fixed top-0 left-0 h-full w-64 bg-white shadow-2xl z-40 transform ${menuOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300`}>
-                    <div className="flex flex-col pt-20 px-8 gap-8">
-                        <Link to="/" className="text-gray-800 text-base font-medium hover:text-brand-teal transition-colors" onClick={() => setMenuOpen(false)}>Home</Link>
-                        <a href="https://play.google.com/store/apps/details?id=com.ekthaa.business" target="_blank" rel="noopener noreferrer" className="text-gray-800 text-base font-medium hover:text-brand-teal transition-colors" onClick={() => setMenuOpen(false)}>Play Store</a>
-                        <a href="https://ekthaa.com" target="_blank" rel="noopener noreferrer" className="text-gray-800 text-base font-medium hover:text-brand-teal transition-colors" onClick={() => setMenuOpen(false)}>Ekthaa AI</a>
-                    </div>
-                </nav>
-            </div>
-            
-            {/* Logo/Brand */}
-            <div className="mb-16 mt-16 flex flex-row items-center justify-start w-full max-w-md">
-                <img src="/logo.png" alt="Ekthaa Logo" className="h-20 w-20 mr-4" />
-                <div className="flex flex-col justify-center">
-                    <h1 className="text-3xl md:text-4xl font-serif font-semibold tracking-tight text-gray-900 mb-1">Ekthaa</h1>
-                    <p className="text-gray-500 text-sm tracking-wide whitespace-nowrap">Connecting Businesses and Customers</p>
-                </div>
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-12">
+            {/* Header Section */}
+            <div className="text-center mb-8 max-w-2xl">
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Ekthaa</h1>
+                <p className="text-lg md:text-xl text-gray-700 font-medium mb-2">
+                    Connecting Local Businesses, Students & Builders
+                </p>
+                <p className="text-sm md:text-base text-gray-500">
+                    Discover apps, communities & opportunities by Ekthaa
+                </p>
             </div>
 
-            {/* Linktree Style Links Section */}
-            <div className="w-full max-w-md space-y-3 mb-12 px-4">
-                
+            {/* Main Apps Section */}
+            <div className="w-full max-w-2xl space-y-4 mb-8">
                 {/* Ekthaa Business */}
-                <div className="group">
-                  <a href="https://play.google.com/store/apps/details?id=com.ekthaa.business" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                          <span className="text-white font-medium text-base">Ekthaa Business</span>
-                          <Link to="/link-info/ekthaa-business" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
-                      </div>
-                  </a>
-                </div>
-                <div className="flex gap-2 justify-center mb-2">
-                    <a href="https://play.google.com/store/apps/details?id=com.ekthaa.business" target="_blank" rel="noopener noreferrer" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
-                        Play Store
-                    </a>
-                    <Link to="/coming-soon" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
-                        App Store
-                    </Link>
-                    <Link to="/coming-soon" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
-                        Web
-                    </Link>
-                </div>
-
-                {/* Business & Builder Community */}
-                <div className="group">
-                  <a href="https://chat.whatsapp.com/L82Bpsj3OD60M5MLxTFRH2" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                          <span className="text-white font-medium text-base">Ekthaa Business & Builder Community</span>
-                          <Link to="/link-info/builder-community" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
-                      </div>
-                  </a>
-                </div>
-
-                {/* Student Stall Application */}
-                <div className="group">
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSclln7rE1cpVKWDTAaPxx0wsc6UM83X_HWxzEg8Hl-XJkXkEg/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                          <span className="text-white font-medium text-base">College Fest Student Stall</span>
-                          <Link to="/link-info/student-stall" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
-                      </div>
-                  </a>
+                <div className="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-14 h-14 bg-brand-teal rounded-full flex items-center justify-center text-3xl">
+                            💼
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">Ekthaa Business</h2>
+                            <p className="text-sm text-gray-600 mb-4">
+                                List your products, offers & services. Get discovered by nearby customers.
+                            </p>
+                            <div className="flex flex-wrap items-center gap-3">
+                                <a
+                                    href="https://play.google.com/store/apps/details?id=com.ekthaa.business"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-brand-teal text-white px-5 py-2.5 rounded-full font-medium text-sm hover:bg-teal-600 transition-colors"
+                                >
+                                    Open Business App
+                                </a>
+                                <div className="flex gap-2">
+                                    <a href="https://play.google.com/store/apps/details?id=com.ekthaa.business" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-brand-teal transition-colors" title="Play Store">
+                                        <i className="fab fa-google-play text-2xl"></i>
+                                    </a>
+                                    <Link to="/coming-soon" className="text-gray-700 hover:text-brand-teal transition-colors" title="App Store">
+                                        <i className="fab fa-apple text-2xl"></i>
+                                    </Link>
+                                    <Link to="/coming-soon" className="text-gray-700 hover:text-brand-teal transition-colors" title="Web">
+                                        <i className="fas fa-globe text-2xl"></i>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Internships at Ekthaa */}
-                <div className="group">
-                  <a href="https://internships.ekthaa.app" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                          <span className="text-white font-medium text-base">Internships</span>
-                          <Link to="/link-info/internships" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
-                      </div>
-                  </a>
+                {/* Ekthaa Student */}
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-14 h-14 bg-blue-400 rounded-full flex items-center justify-center text-3xl">
+                            🎓
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">Ekthaa Student</h2>
+                            <p className="text-sm text-gray-600 mb-4">
+                                Discover nearby businesses, offers & college opportunities.
+                            </p>
+                            <a
+                                href="https://chat.whatsapp.com/IRKgSdE3KtsAiCddDNlHfc"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block bg-blue-500 text-white px-5 py-2.5 rounded-full font-medium text-sm hover:bg-blue-600 transition-colors"
+                            >
+                                Explore as Student
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Ekthaa AI */}
-                <div className="group">
-                  <a href="https://ekthaa.com" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                          <span className="text-white font-medium text-base">Ekthaa AI</span>
-                          <Link to="/link-info/ekthaa-ai" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
-                      </div>
-                  </a>
+                {/* Ekthaa Builder Community */}
+                <div className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-14 h-14 bg-purple-400 rounded-full flex items-center justify-center text-3xl">
+                            🚀
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">Ekthaa Builder Community</h2>
+                            <p className="text-sm text-gray-600 mb-4">
+                                Learn, build & grow with founders and makers.
+                            </p>
+                            <a
+                                href="https://chat.whatsapp.com/L82Bpsj3OD60M5MLxTFRH2"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block bg-purple-500 text-white px-5 py-2.5 rounded-full font-medium text-sm hover:bg-purple-600 transition-colors"
+                            >
+                                Join Community
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex gap-2 justify-center mb-2">
-                    <a href="https://ekthaa.com" target="_blank" rel="noopener noreferrer" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
-                        Web
-                    </a>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScho-lGwicrkOHLa6FbmGyH0jd9HuNxpO02LcZCuaS9QbjRmw/viewform" target="_blank" rel="noopener noreferrer" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
-                            Play Store
-                        </a>
-                    <Link to="/coming-soon" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
-                        App Store
-                    </Link>
-                </div>
+            </div>
 
-                {/* Student Community */}
-                <div className="group">
-                  <a href="https://chat.whatsapp.com/IRKgSdE3KtsAiCddDNlHfc" target="_blank" rel="noopener noreferrer" className="block w-full bg-brand-teal px-5 py-4 rounded-2xl text-center hover:bg-teal-600 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-center justify-between">
-                          <span className="text-white font-medium text-base">Ekthaa Student Community</span>
-                          <Link to="/link-info/student-community" className="bg-white text-black text-xs border border-white rounded-full px-3 py-1 hover:underline" onClick={(e) => e.stopPropagation()}>Know More →</Link>
-                      </div>
-                  </a>
-                </div>
+            {/* Opportunities Section */}
+            <div className="w-full max-w-2xl mb-8">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    🚀 Opportunities with Ekthaa
+                </h3>
+                <div className="space-y-3">
+                    {/* College Fest Student Stall */}
+                    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-start gap-4">
+                            <div className="flex-shrink-0 text-3xl">
+                                🎪
+                            </div>
+                            <div className="flex-1">
+                                <h4 className="text-lg font-bold text-gray-900 mb-1">College Fest Student Stall</h4>
+                                <p className="text-sm text-gray-600 mb-3">
+                                    Run a stall, manage games, earn & learn real-world execution.
+                                </p>
+                                <a
+                                    href="https://docs.google.com/forms/d/e/1FAIpQLSclln7rE1cpVKWDTAaPxx0wsc6UM83X_HWxzEg8Hl-XJkXkEg/viewform?usp=header"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium text-sm hover:bg-gray-200 transition-colors"
+                                >
+                                    View Details →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
+                    {/* Internships */}
+                    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-start gap-4">
+                            <div className="flex-shrink-0 text-3xl">
+                                💼
+                            </div>
+                            <div className="flex-1">
+                                <h4 className="text-lg font-bold text-gray-900 mb-1">Internships</h4>
+                                <p className="text-sm text-gray-600 mb-3">
+                                    Work with Ekthaa on tech, marketing & operations.
+                                </p>
+                                <a
+                                    href="https://internships.ekthaa.app"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium text-sm hover:bg-gray-200 transition-colors"
+                                >
+                                    Apply Now →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Ekthaa AI */}
+                    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-start gap-4">
+                            <div className="flex-shrink-0 text-3xl">
+                                🤖
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex items-start justify-between mb-1">
+                                    <h4 className="text-lg font-bold text-gray-900">Ekthaa AI</h4>
+                                    <span className="bg-brand-teal text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                                        Beta
+                                    </span>
+                                </div>
+                                <p className="text-sm text-gray-600 mb-3">
+                                    Smart tools to help businesses grow faster.
+                                </p>
+                                <a
+                                    href="https://ekthaa.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium text-sm hover:bg-gray-200 transition-colors"
+                                >
+                                    Learn More →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Footer */}
+            <div className="text-center text-sm text-gray-600 flex items-center gap-2">
+                <span>Made with ❤️ by Team Ekthaa</span>
+                <a
+                    href="https://www.instagram.com/ekthaa.ai?utm_source=qr&igsh=MW1iNGU2ZG1lYWR6dg=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-pink-600 hover:text-pink-700 transition-colors"
+                    aria-label="Instagram"
+                >
+                    📷
+                </a>
             </div>
         </div>
     );
