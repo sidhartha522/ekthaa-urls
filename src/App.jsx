@@ -40,6 +40,7 @@ import ComingSoon from './pages/ComingSoon';
 import StudentStallInfo from './pages/StudentStallInfo';
 import EkthaaBusiness from './pages/EkthaaBusiness';
 import EventsLanding from './pages/EventsLanding';
+import FreePlan from './pages/FreePlan';
 
 function PageTracker() {
   usePageTracking();
@@ -126,6 +127,7 @@ function AppContent() {
         <Route path="/ekthaa-business-details" element={<AppLayout showChat={false} showHeader={false}><EkthaaBusiness /></AppLayout>} />
         <Route path="/student-stall-details" element={<AppLayout showChat={false} showHeader={false}><StudentStallInfo /></AppLayout>} />
         <Route path="/events" element={<AuthLayout><EventsLanding /></AuthLayout>} />
+        <Route path="/freeplan" element={<AuthLayout><FreePlan /></AuthLayout>} />
 
         {/* Auth pages */}
         <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />

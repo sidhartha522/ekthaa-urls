@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 
 const WHATSAPP_LINK = 'https://wa.me/916305964802?text=Hi%20Ekthaa%2C%20I%20want%20to%20include%20my%20brand%20in%20your%20college%20stalls';
 const EMAIL_LINK = 'mailto:contact@ekthaa.com?subject=Brand%20Collaboration%20Inquiry';
@@ -77,11 +78,16 @@ const rewards = [
 
 const EventsLanding = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+    const navigate = useNavigate();
+    
     const handlePlanClick = (planName) => {
-        let msg = '';
         if (planName === 'Free Plan') {
-            msg = 'Hi Ekthaa, I want to include my brand in your college stalls\nI am interested in free plan';
-        } else if (planName === 'Starter Promotion') {
+            navigate('/freeplan');
+            return;
+        }
+        
+        let msg = '';
+        if (planName === 'Starter Promotion') {
             msg = 'Hi Ekthaa, I want to include my brand in your college stalls\nI am interested in the Starter Promotion plan';
         } else if (planName === 'Brand Visibility') {
             msg = 'Hi Ekthaa, I want to include my brand in your college stalls\nI am interested in the Brand Visibility plan';
