@@ -59,7 +59,7 @@ function AppContent() {
   const { loading, user } = useAuth();
 
   // Unified app-first layout for all pages
-  const AppLayout = ({ children, showChat = true, showHeader = true }) => (
+  const AppLayout = ({ children, showChat = true, showHeader = true, showFooter = true }) => (
     <div className="min-h-screen flex font-sans bg-brand-cream text-brand-text">
       <div className="flex-1 flex flex-col transition-all duration-300 ease-in-out w-full">
         {showHeader && <Header currentCity={currentCity} setCurrentCity={setCurrentCity} />}
@@ -73,7 +73,7 @@ function AppContent() {
             children
           )}
         </main>
-        <FooterNew />
+        {showFooter && <FooterNew />}
       </div>
 
       {showChat && (
@@ -97,7 +97,7 @@ function AppContent() {
       <PageTracker />
       <Routes>
         {/* Main pages with app-first design */}
-        <Route path="/" element={<AppLayout showChat={false} showHeader={false}><HomeNew /></AppLayout>} />
+        <Route path="/" element={<AppLayout showChat={false} showHeader={false} showFooter={false}><HomeNew /></AppLayout>} />
 
         {/* Explore pages - Products and Businesses */}
         {/* Product Catalog ("Products Page") */}
