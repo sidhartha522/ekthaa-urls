@@ -92,6 +92,8 @@ function AppContent() {
       <Routes>
         {/* Main pages with app-first design */}
         <Route path="/" element={<AppLayout showChat={false} showHeader={false}><HomeNew /></AppLayout>} />
+        {/* Redirect /business to Play Store */}
+        <Route path="/business" element={<Navigate to="https://play.google.com/store/apps/details?id=com.ekthaa.business" replace />} />
 
         {/* Explore pages - Products and Businesses */}
         {/* Product Catalog ("Products Page") */}
