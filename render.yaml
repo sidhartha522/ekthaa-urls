@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: ekthaa-website
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start

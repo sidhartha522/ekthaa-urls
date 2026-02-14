@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Marketing pages
+Allow: /
+Allow: /about
+Allow: /products
+Allow: /careers
+Allow: /terms
+Allow: /privacy
+
+# Customer app pages
+Allow: /explore
+Allow: /business/*
+Allow: /service/*
+
+# Disallow auth pages from indexing
+Disallow: /login
+Disallow: /register
+Disallow: /dashboard
+Disallow: /my-businesses
+Disallow: /referral
+
+Sitemap: https://ekthaa.app/sitemap.xml

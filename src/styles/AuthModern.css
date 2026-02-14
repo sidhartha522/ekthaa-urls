@@ -1,0 +1,212 @@
+/* Auth Modern - RESTORED Styles */
+
+.login-ios {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F8F6F3;
+    /* brand-cream */
+    padding: 1.5rem;
+}
+
+.login-wrapper {
+    width: 100%;
+    max-width: 420px;
+}
+
+.illustration-borderless {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.logo-fallback {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
+    /* brand-teal gradient */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+    box-shadow: 0 10px 25px -5px rgba(20, 184, 166, 0.4);
+}
+
+.login-card-clean {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.card-header-clean {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.card-header-clean h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #2C2C2C;
+    /* brand-text */
+    margin: 0;
+    font-weight: 500;
+}
+
+.card-header-clean h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.875rem;
+    background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0.25rem 0 0;
+    font-weight: 700;
+}
+
+.input-clean {
+    display: flex;
+    align-items: center;
+    background-color: #FAFAFA;
+    /* gray-50/brand-light */
+    border: 1px solid #E5E7EB;
+    /* gray-200 */
+    border-radius: 12px;
+    padding: 0.875rem 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+}
+
+.input-clean:focus-within {
+    border-color: #14b8a6;
+    /* brand-teal */
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+    background-color: white;
+}
+
+.input-clean i {
+    color: #9CA3AF;
+    /* gray-400 */
+    font-size: 1.125rem;
+    width: 24px;
+    text-align: center;
+    margin-right: 0.75rem;
+}
+
+.input-clean input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.95rem;
+    color: #1F2937;
+    /* gray-800 */
+    font-family: 'Inter', sans-serif;
+}
+
+.input-clean input::placeholder {
+    color: #9CA3AF;
+}
+
+.btn-login-clean,
+.btn-submit-clean {
+    width: 100%;
+    background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.25);
+}
+
+.btn-login-clean:hover,
+.btn-submit-clean:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(20, 184, 166, 0.35);
+}
+
+.btn-login-clean:disabled,
+.btn-submit-clean:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.divider-clean {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: #6B7280;
+    /* gray-500 */
+    font-size: 0.875rem;
+}
+
+.divider-clean::before,
+.divider-clean::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.divider-clean span {
+    padding: 0 0.75rem;
+}
+
+.btn-customer-clean {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    color: #4B5563;
+    /* gray-600 */
+    padding: 0.875rem;
+    border-radius: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    gap: 0.5rem;
+}
+
+.btn-customer-clean:hover {
+    background-color: #F9FAFB;
+    border-color: #D1D5DB;
+    color: #1F2937;
+}
+
+.signup-link {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6B7280;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card-clean {
+    animation: fade-in-up 0.5s ease-out;
+}
