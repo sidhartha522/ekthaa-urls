@@ -148,7 +148,7 @@ function AppContent() {
         <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
 
         {/* Global Download Page */}
-        <Route path="/download" element={<AppLayout showChat={false} minimalHeader={true}><Downloads /></AppLayout>} />
+        <Route path="/download" element={<AppLayout showChat={false} showHeader={false}><Downloads /></AppLayout>} />
 
         {/* External redirects */}
         <Route path="/business" element={<ExternalRedirect url="https://play.google.com/store/apps/details?id=com.ekthaa.business" />} />
