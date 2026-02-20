@@ -21,6 +21,7 @@ import Analytics from './pages/Analytics';
 import AnalyticsNew from './pages/AnalyticsNew';
 import AnalyticsAuth from './components/AnalyticsAuth';
 import LinkInfo from './pages/LinkInfo';
+import Downloads from './pages/Downloads';
 
 // Customer app pages
 import Login from './pages/customer/Login';
@@ -63,10 +64,10 @@ function AppContent() {
   const { loading, user } = useAuth();
 
   // Unified app-first layout for all pages
-  const AppLayout = ({ children, showChat = true, showHeader = true }) => (
+  const AppLayout = ({ children, showChat = true, showHeader = true, minimalHeader = false }) => (
     <div className="min-h-screen flex font-sans bg-brand-cream text-brand-text">
       <div className="flex-1 flex flex-col transition-all duration-300 ease-in-out w-full">
-        {showHeader && <Header currentCity={currentCity} setCurrentCity={setCurrentCity} />}
+        {showHeader && <Header currentCity={currentCity} setCurrentCity={setCurrentCity} minimal={minimalHeader} />}
         <main className="flex-grow pb-16 md:pb-0">
           {/* Only show loader if auth is loading and we don't have a cached user */}
           {loading && !user ? (
@@ -145,6 +146,9 @@ function AppContent() {
         {/* Auth pages */}
         <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
         <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
+
+        {/* Global Download Page */}
+        <Route path="/download" element={<AppLayout showChat={false} minimalHeader={true}><Downloads /></AppLayout>} />
 
         {/* External redirects */}
         <Route path="/business" element={<ExternalRedirect url="https://play.google.com/store/apps/details?id=com.ekthaa.business" />} />

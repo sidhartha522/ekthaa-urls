@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useUserLocation } from '../hooks/useLocation';
 import { CITIES } from '../data/mockData';
 
-const Header = ({ currentCity, setCurrentCity }) => {
+const FullHeader = ({ currentCity, setCurrentCity }) => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
     const [cityModalOpen, setCityModalOpen] = useState(false);
@@ -201,6 +201,21 @@ const Header = ({ currentCity, setCurrentCity }) => {
             )}
         </header>
     );
+};
+
+const MinimalHeader = () => (
+    <header className="bg-white shadow-sm sticky top-0 z-50 border-b border-brand-beige">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+            <Link to="/" className="text-3xl font-serif font-bold tracking-tight text-brand-dark hover:text-brand-teal transition-colors">
+                ekthaa
+            </Link>
+        </div>
+    </header>
+);
+
+const Header = (props) => {
+    if (props.minimal) return <MinimalHeader />;
+    return <FullHeader {...props} />;
 };
 
 export default Header;
