@@ -128,11 +128,11 @@ function AppContent() {
         <Route path="/analytics" element={<AnalyticsAuth><AnalyticsNew /></AnalyticsAuth>} />
 
         {/* Legal pages */}
-        <Route path="/terms" element={<AppLayout showChat={false}><Terms /></AppLayout>} />
-        <Route path="/privacy" element={<AppLayout showChat={false}><Privacy /></AppLayout>} />
-        <Route path="/privacy-customer" element={<AppLayout showChat={false}><PrivacyCustomer /></AppLayout>} />
-        <Route path="/delete-account" element={<AppLayout showChat={false}><DeleteAccount /></AppLayout>} />
-        <Route path="/support" element={<AppLayout showChat={false}><Support /></AppLayout>} />
+        <Route path="/terms" element={<AppLayout showChat={false} minimalHeader={true}><Terms /></AppLayout>} />
+        <Route path="/privacy" element={<AppLayout showChat={false} minimalHeader={true}><Privacy /></AppLayout>} />
+        <Route path="/privacy-customer" element={<AppLayout showChat={false} minimalHeader={true}><PrivacyCustomer /></AppLayout>} />
+        <Route path="/delete-account" element={<AppLayout showChat={false} minimalHeader={true}><DeleteAccount /></AppLayout>} />
+        <Route path="/support" element={<AppLayout showChat={false} minimalHeader={true}><Support /></AppLayout>} />
         <Route path="/coming-soon" element={<ExternalRedirect url="https://apps.apple.com/in/app/ekthaa-business/id6758575188" />} />
         <Route path="/link-info/:link" element={<AppLayout showChat={false} showHeader={false}><LinkInfo /></AppLayout>} />
         <Route path="/ekthaa-business-details" element={<AppLayout showChat={false} showHeader={false}><EkthaaBusiness /></AppLayout>} />

@@ -5,8 +5,8 @@ function PrivacyCustomer() {
   return (
     <div className="privacy-container">
       <article className="privacy-content">
-        <h1>Privacy Policy for Ekthaa Customer App</h1>
-        
+        <h1>Privacy Policy for Ekthaa AI</h1>
+
         <div className="privacy-meta">
           <strong>Last Updated:</strong> February 4, 2026
         </div>
@@ -15,13 +15,13 @@ function PrivacyCustomer() {
           <h2>Introduction</h2>
           <p>Welcome to <strong>Ekthaa</strong> ("Ekthaa", "we", "our", or "us").</p>
           <p>We value your trust and are committed to protecting your privacy and personal data.</p>
-          <p>This Privacy Policy explains how we collect, use, store, disclose, and safeguard your information when you use the <strong>Ekthaa Customer app and website</strong> (collectively, the "Service") to discover and explore local businesses, products, and services.</p>
+          <p>This Privacy Policy explains how we collect, use, store, disclose, and safeguard your information when you use the <strong>Ekthaa AI app and website</strong> (collectively, the "Service") to discover and explore local businesses, products, and services.</p>
           <p>By using the Service, you agree to the collection and use of information in accordance with this Privacy Policy. If you do not agree, please do not use the Service.</p>
         </section>
 
         <section>
           <h2>1. Information We Collect</h2>
-          
+
           <h3>1.1 Personal Information</h3>
           <p>Information you provide directly to us when you create an account or use our services:</p>
           <ul>
@@ -76,7 +76,7 @@ function PrivacyCustomer() {
 
         <section>
           <h2>2. How We Use Your Information</h2>
-          
+
           <h3>2.1 Core Services</h3>
           <p>We use your information to:</p>
           <ul>
@@ -123,7 +123,7 @@ function PrivacyCustomer() {
 
         <section>
           <h2>3. Data Storage & Security</h2>
-          
+
           <h3>3.1 Data Storage</h3>
           <ul>
             <li>Data is stored on secure cloud infrastructure</li>
@@ -215,7 +215,7 @@ function PrivacyCustomer() {
             <li>Provide personalized experiences</li>
             <li>Deliver relevant content and recommendations</li>
           </ul>
-          
+
           <h3>Types of Cookies We Use:</h3>
           <ul>
             <li><strong>Essential Cookies:</strong> Required for basic functionality</li>
@@ -223,7 +223,7 @@ function PrivacyCustomer() {
             <li><strong>Functional Cookies:</strong> Remember your preferences</li>
             <li><strong>Analytics Cookies:</strong> Help us understand usage patterns</li>
           </ul>
-          
+
           <p>You can control cookies through your browser or device settings. Note that disabling certain cookies may limit functionality.</p>
         </section>
 
@@ -275,7 +275,7 @@ function PrivacyCustomer() {
 
         <section>
           <h2>8. Children's Privacy</h2>
-          <p>Ekthaa Customer Service is <strong>not intended for users under 13 years of age</strong> (or the applicable age in your jurisdiction). We do not knowingly collect personal information from children.</p>
+          <p>Ekthaa AI Service is <strong>not intended for users under 13 years of age</strong> (or the applicable age in your jurisdiction). We do not knowingly collect personal information from children.</p>
           <p>If you believe a child has provided us with personal information, please contact us immediately, and we will take steps to delete such information.</p>
         </section>
 
@@ -288,7 +288,7 @@ function PrivacyCustomer() {
         <section>
           <h2>10. Changes to This Privacy Policy</h2>
           <p>We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements.</p>
-          
+
           <p>We will notify you of significant changes through:</p>
           <ul>
             <li>In-app notifications or banners</li>
@@ -296,7 +296,7 @@ function PrivacyCustomer() {
             <li>Updated "Last Updated" date at the top of this policy</li>
             <li>Prominent notice on our website</li>
           </ul>
-          
+
           <p>Continued use of the Service after changes are posted constitutes acceptance of the revised Privacy Policy.</p>
         </section>
 
@@ -317,9 +317,9 @@ function PrivacyCustomer() {
           <h2>12. Contact Information</h2>
           <p>For questions, concerns, or privacy-related requests:</p>
           <p><strong>Ekthaa</strong><br />
-          📧 Email: <a href="mailto:support@ekthaa.app">support@ekthaa.app</a><br />
-          🌐 Website: <a href="https://www.ekthaa.app">www.ekthaa.app</a></p>
-          
+            📧 Email: <a href="mailto:support@ekthaa.app">support@ekthaa.app</a><br />
+            🌐 Website: <a href="https://www.ekthaa.app">www.ekthaa.app</a></p>
+
           <p>We aim to respond to all privacy inquiries within 30 days.</p>
         </section>
 
@@ -330,14 +330,14 @@ function PrivacyCustomer() {
 
         <section>
           <h2>14. Consent</h2>
-          <p>By using the Ekthaa Customer Service, you acknowledge that you have read and understood this Privacy Policy and consent to:</p>
+          <p>By using the Ekthaa AI Service, you acknowledge that you have read and understood this Privacy Policy and consent to:</p>
           <ul>
             <li>Collection and use of your data as described in this policy</li>
             <li>Processing of your information for service delivery and improvement</li>
             <li>Transfer of data to service providers and locations as described</li>
             <li>Use of cookies and tracking technologies</li>
           </ul>
-          
+
           <p>If you do not agree with this Privacy Policy, please discontinue use of the Service.</p>
         </section>
 
