@@ -111,7 +111,7 @@ const HomeNew = () => {
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLScho-lGwicrkOHLa6FbmGyH0jd9HuNxpO02LcZCuaS9QbjRmw/viewform" target="_blank" rel="noopener noreferrer" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
                             Play Store
                         </a>
-                    <Link to="/coming-soon" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
+                    <Link to="https://apps.apple.com/in/app/ekthaa-ai/id6759034113" className="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition text-xs font-medium">
                         App Store
                     </Link>
                 </div>
