@@ -129,7 +129,7 @@ const Downloads = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 max-w-6xl mx-auto w-full shrink min-h-[0] items-stretch">
                         <AppCard
                             title="Ekthaa Business"
-                            description="Empower your business with our comprehensive suite of tools. Manage operations, connect with customers, and grow your reach seamlessly."
+                            description="Manage operations, connect with customers, and grow your business seamlessly."
                             appStoreLink="https://apps.apple.com/in/app/ekthaa-business/id6758575188"
                             playStoreLink="https://play.google.com/store/apps/details?id=com.ekthaa.business"
                             isPlayStoreComingSoon={false}
@@ -138,7 +138,7 @@ const Downloads = () => {
 
                         <AppCard
                             title="Ekthaa AI"
-                            description="Your intelligent shopping assistant. Discover products, explore businesses, and get personalized recommendations powered by AI."
+                            description="Your intelligent AI shopping assistant. Discover local products and businesses."
                             appStoreLink="https://apps.apple.com/in/app/ekthaa-ai/id6759034113"
                             playStoreLink="#"
                             isPlayStoreComingSoon={true}
